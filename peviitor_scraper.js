@@ -19,6 +19,16 @@ class Scraper {
         return new jssoup(response.data);
     }
 
+    async getTag(tag, attrs){
+        const response = await this.soup;
+        return response.find(tag, attrs);
+    }
+
+    async getTags(tag, attrs){
+        const response = await this.soup;
+        return response.findAll(tag, attrs);
+    }
+
 }
 
 
