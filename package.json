@@ -1,0 +1,23 @@
+{
+  "name": "peviitor_scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "peviitor_scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peviitor-ro/based_scraper_js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peviitor-ro/based_scraper_js/issues"
+  },
+  "homepage": "https://github.com/peviitor-ro/based_scraper_js#readme",
+  "dependencies": {
+    "axios": "^1.3.6",
+    "jssoup": "^0.0.15"
+  }
+}
