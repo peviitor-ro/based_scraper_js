@@ -27,4 +27,7 @@ jobs:
         node-version: 14.x
     - name: Install dependencies
       run: npm i
+    - name: Run Scraper
+      run: node main.js
+
 
