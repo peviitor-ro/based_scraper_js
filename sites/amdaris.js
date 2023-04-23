@@ -40,24 +40,10 @@ s.soup.then((soup) => {
             console.log(job_title + " -> " + city);
         }
     }
-    console.log("Total jobs: " + finalJobs.length);
 }).then(() => {
+    console.log("Total jobs: " + finalJobs.length);
     const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    axios.post("https://api.peviitor.ro/v4/clean/", company, {
-        headers: {
-            'apikey': apiKey,
-            "Content-Type": "application/x-www-form-urlencoded"
-            }
-        }
-    );
-    axios.post("https://api.peviitor.ro/v4/update/", JSON.stringify(finalJobs) , {
-        headers: {
-            'apikey': apiKey,
-            "Content-Type": "aplication/json"
-            }
-        }
-    );
-
+    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
 });
 
 
