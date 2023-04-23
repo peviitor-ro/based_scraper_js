@@ -43,11 +43,36 @@ class ApiScraper {
     }
 }
 
+function postApiPeViitor(apikey, data, company) {
+    const cleanUrl = "https://api.peviitor.ro/v4/clean/";
+    const updateUrl = "https://api.peviitor.ro/v4/update/";
+    const scraper = new ApiScraper(cleanUrl);
 
+    scraper.headers.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    scraper.headers.headers['apikey'] = apikey;
+
+    scraper.post(company).then((d, err) => {
+        if (err) {
+            console.log(err);
+        } 
+        console.log("Cleaned company: " + company.company);
+
+        scraper.url = updateUrl;
+        scraper.headers.headers['Content-Type'] = 'application/json';
+
+        scraper.post(JSON.stringify(data)).then((data, err) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log("Updated company: " + company.company);
+        });
+    });
+};
 
 module.exports = {
     Scraper: Scraper,
-    ApiScraper: ApiScraper
+    ApiScraper: ApiScraper,
+    postApiPeViitor: postApiPeViitor
 }
 
 
