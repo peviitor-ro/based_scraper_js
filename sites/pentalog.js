@@ -1,7 +1,6 @@
 "use strict"
 
 const scraper = require(".././peviitor_scraper.js");
-const axios = require('axios');
 const uuid = require('uuid');
 
 const url = "https://www.pentalog.com/api/jobs";
