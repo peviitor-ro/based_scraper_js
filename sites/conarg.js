@@ -3,22 +3,23 @@
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-const url =
-  "https://www.borgwarner.com/careers/job-search?indexCatalogue=default&wordsMode=0&1Country=Romania";
-const company = { company: "BorgWarner" };
+const url = "http://www.conarg.co/ro/cariere/oportunitati-de-cariera.html";
+
+const company = { company: "Conarg" };
 let finalJobs = [];
+let logo;
+
 const s = new scraper.Scraper(url);
 
 s.soup
   .then((soup) => {
-
-    const jobs = soup.findAll("h3", { class: "bw-global-list-h3" });
+    const jobs = soup.find("article", { class: "wk-content" }).findAll("li");
 
     jobs.forEach((job) => {
       const id = uuid.v4();
-      const job_title = job.text.trim();
-      const job_link = "https://www.borgwarner.com" + job.find("a").attrs.href;
-      const company = "BorgWarner";
+      const job_title = job.find("h2").text.trim();
+      const job_link = "http://www.conarg.co" + job.find("a").attrs.href;
+      const company = "Conarg";
       const city = "Romania";
       const country = "Romania";
 
@@ -42,11 +43,12 @@ s.soup
     const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
     const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
 
-    let logo = "https://upload.wikimedia.org/wikipedia/commons/4/4b/BorgWarner.jpg";
-    
+    let logo =
+      "http://www.conarg.co/images/logo/logo.svg";
+
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "BorgWarner", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: "Conarg", logo: logo }]));
   });
