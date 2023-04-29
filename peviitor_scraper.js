@@ -75,9 +75,12 @@ function postApiPeViitor(apikey, data, company) {
 const range = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
 
+const soup = (html) => new jssoup(html);
+
 module.exports = {
   Scraper: Scraper,
   ApiScraper: ApiScraper,
   postApiPeViitor: postApiPeViitor,
     range: range,
+    soup: soup
 };
