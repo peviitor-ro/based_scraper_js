@@ -12,10 +12,10 @@ files.forEach((file) => {
     if (!exclude.includes(file)) {
         child_process.exec("node " + "sites/" + file, (err, stdout, stderr) => {
             if (err) {
-                console.log(err);
+                console.log("Error scraping " + file);
+            } else {
+                console.log("Success scraping " + file);
             }
-            console.log("Running " + file);
-            console.log(stdout);
         })
     }
 })
