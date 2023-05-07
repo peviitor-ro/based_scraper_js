@@ -5,12 +5,12 @@ const axios = require("axios");
 const url = "https://dev.laurentiumarian.ro/scraper/based_scraper_js/";
 
 axios.post(url, {"update": true}).then((response) => {
-    if (response.succes) {
+    if (response.data.succes) {
         console.log("Success updating files");
-        console.log(response.succes);
+        console.log(response.data.succes);
     } else {
         console.log("Error updating files");
-        console.log(response.error);
+        console.log(response.data.error);
     }
 }).catch((error) => {
     console.log("Error updating files");

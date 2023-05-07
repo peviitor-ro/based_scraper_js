@@ -18,11 +18,11 @@ files.forEach((file) => {
                 axios.post("https://dev.laurentiumarian.ro/scraper/based_scraper_js/", {
                     "file": file,
                 }).then((response) => {
-                    if (response.succes){
+                    if (response.data.success){
                         console.log("Success Scraping " + file + " after trigger");
                     } else {
                         console.log("Both scraping and trigger failed for " + file);
-                        console.log(response.error);
+                        console.log(response.data.error);
                     }
                 }).catch((error) => {
                     console.log("Error sending trigger for " + file);
