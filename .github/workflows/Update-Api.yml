@@ -23,4 +23,4 @@ jobs:
     - name: Install dependencies
       run: npm install axios
     - name: Update API Files
-      run: node main.js
+      run: node apiUpdateFiles.js
