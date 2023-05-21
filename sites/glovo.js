@@ -3,25 +3,24 @@
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-const url =
-  "https://careers.ryanair.com/wp-content/uploads/ryr-workable/jobs.json";
+const url = "https://boards-api.greenhouse.io/v1/boards/glovo/jobs";
 
-const company = { company: "Ryanair" };
+const company = { company: "Glovo" };
 let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
 
 s.get()
   .then((response) => {
-    const jobs = response;
+    const jobs = response.jobs;
 
     jobs.forEach((job) => {
-      const country = job.location.country;
-      if (country == "Romania") {
+      const country = job.location.name;
+      if (country.includes("Romania")) {
         const id = uuid.v4();
         const job_title = job.title;
-        const job_link = job.url;
-        const city = job.city;
+        const job_link = job.absolute_url;
+        const city = job.location.name.split(",")[0];
 
         console.log(job_title + " -> " + city);
 
@@ -42,8 +41,7 @@ s.get()
     const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
     const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
 
-    let logo =
-      "https://1000logos.net/wp-content/uploads/2020/03/Ryanair-Logo-500x313.png";
+    let logo = "https://upload.wikimedia.org/wikipedia/en/thumb/8/82/Glovo_logo.svg/317px-Glovo_logo.svg.png?20220725155704";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"

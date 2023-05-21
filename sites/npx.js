@@ -51,7 +51,6 @@ s.post(data).then((response) => {
         const city = job.locationsText.split(",")[0];
 
         console.log(job_title + " -> " + city);
-        console.log(job_link);
 
         const jobObj = {
           id: id,
