@@ -65,16 +65,16 @@ s.post(data).then((response) => {
     .then(() => {
       console.log("Total jobs: " + jobs.length);
 
-    //   const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    //   const postPeviitor = scraper.postApiPeViitor(apiKey, jobs, company);
+      const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
+      const postPeviitor = scraper.postApiPeViitor(apiKey, jobs, company);
 
-    //   let logo =
-    //     "https://crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers/assets/logo";
+      let logo =
+        "https://crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers/assets/logo";
 
-    //   let postLogo = new scraper.ApiScraper(
-    //     "https://api.peviitor.ro/v1/logo/add/"
-    //   );
-    //   postLogo.headers.headers["Content-Type"] = "application/json";
-    //   postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
+      let postLogo = new scraper.ApiScraper(
+        "https://api.peviitor.ro/v1/logo/add/"
+      );
+      postLogo.headers.headers["Content-Type"] = "application/json";
+      postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
     });
 });

@@ -61,16 +61,16 @@ s.soup.then((soup) => {
     .then(() => {
       console.log("Final jobs: " + finalJobs.length);
 
-    //   const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    //   const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+      const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
+      const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
 
-    //   let logo =
-    //     "https://rmkcdn.successfactors.com/6fdd2711/8ba9d1d9-30b6-4c01-b093-b.svg";
+      let logo =
+        "https://rmkcdn.successfactors.com/6fdd2711/8ba9d1d9-30b6-4c01-b093-b.svg";
 
-    //   let postLogo = new scraper.ApiScraper(
-    //     "https://api.peviitor.ro/v1/logo/add/"
-    //   );
-    //   postLogo.headers.headers["Content-Type"] = "application/json";
-    //   postLogo.post(JSON.stringify([{ id: "Celestica", logo: logo }]));
+      let postLogo = new scraper.ApiScraper(
+        "https://api.peviitor.ro/v1/logo/add/"
+      );
+      postLogo.headers.headers["Content-Type"] = "application/json";
+      postLogo.post(JSON.stringify([{ id: "Celestica", logo: logo }]));
     });
 });

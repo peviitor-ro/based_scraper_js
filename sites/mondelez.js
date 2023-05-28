@@ -69,15 +69,15 @@ s.soup.then((response) => {
   fetchData().then((finalJobs) => {
     console.log("Total jobs: " + finalJobs.length);
 
-    // const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    // const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
+    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
 
-    // let logo = "https://dn9tckvz2rpxv.cloudfront.net/cummins/img4/logo.svg";
+    let logo = "https://dn9tckvz2rpxv.cloudfront.net/cummins/img4/logo.svg";
 
-    // let postLogo = new scraper.ApiScraper(
-    //   "https://api.peviitor.ro/v1/logo/add/"
-    // );
-    // postLogo.headers.headers["Content-Type"] = "application/json";
-    // postLogo.post(JSON.stringify([{ id: "Cummins", logo: logo }]));
+    let postLogo = new scraper.ApiScraper(
+      "https://api.peviitor.ro/v1/logo/add/"
+    );
+    postLogo.headers.headers["Content-Type"] = "application/json";
+    postLogo.post(JSON.stringify([{ id: "Cummins", logo: logo }]));
   });
 });
