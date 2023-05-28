@@ -72,12 +72,12 @@ s.soup.then((response) => {
     const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
     const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
 
-    let logo = "https://dn9tckvz2rpxv.cloudfront.net/cummins/img4/logo.svg";
+    let logo = "https://www.mondelezinternational.com/-/media/Mondelez/Media/Asset-Library/logos/MDLZlogo.jpg";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Cummins", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });
 });
