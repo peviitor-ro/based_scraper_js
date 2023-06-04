@@ -47,7 +47,7 @@ class ApiScraper {
 function postApiPeViitor(data, company) {
   const cleanUrl = "https://api.peviitor.ro/v4/clean/";
   const updateUrl = "https://api.peviitor.ro/v4/update/";
-  const apikey = process.env.API_KEY;
+  const apikey = process.env.APIKEY;
   const scraper = new ApiScraper(cleanUrl);
 
   scraper.headers.headers["Content-Type"] = "application/x-www-form-urlencoded";
