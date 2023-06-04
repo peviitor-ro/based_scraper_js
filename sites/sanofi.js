@@ -18,7 +18,7 @@ s.get()
   .then((d, err) => {
     const soup = scraper.soup(d.results);
 
-    const jobs = soup.find("ul", { class: "job-list" }).findAll("li");
+    const jobs = soup.findAll("ul")[1].findAll("li");
 
     jobs.forEach((job) => {
       const id = uuid.v4();
