@@ -25,16 +25,14 @@ s.soup.then((soup) => {
             const city = location;
             const country = "Romania";
 
-            const j = {
+            finalJobs.push({
                 "id": id,
                 "job_title": job_title,
                 "job_link": job_link,
                 "company": company,
                 "city": city,
                 "country": country
-            }
-
-            finalJobs.push(j);
+            });
 
             console.log(job_title + " -> " + city);
         }
