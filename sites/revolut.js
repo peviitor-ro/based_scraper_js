@@ -3,17 +3,18 @@
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-const url =
-  "https://www.revolut.com/_next/data/2SYk-zqziWN7WKbqUafPT/en-GB/careers.json?city=Romania+-+Remote";
+const url = "https://www.revolut.com/careers/?city=Romania+-+Remote";
 
 const company = { company: "Revolut" };
 let finalJobs = [];
 
-const s = new scraper.ApiScraper(url);
+const s = new scraper.Scraper(url);
 
-s.get()
-  .then((data) => {
-    const jobs = data.pageProps.positions;
+s.soup
+  .then((soup) => {
+    const jobsObject = soup.find("script", { id: "__NEXT_DATA__" });
+
+    const jobs = JSON.parse(jobsObject.text).props.pageProps.positions;
 
     jobs.forEach((job) => {
       job.locations.forEach((location) => {
