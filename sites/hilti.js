@@ -40,7 +40,7 @@ s.soup
   .then(() => {
     console.log("Total jobs: " + finalJobs.length);
 
-    scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo = "https://careers.hilti.group/images/logo.svg";
 
