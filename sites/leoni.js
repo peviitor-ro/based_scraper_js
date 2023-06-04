@@ -92,8 +92,7 @@ s.post(data).then((res) => {
   fetcData().then((finalJobs) => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://d1619fmrcx9c43.cloudfront.net/typo3conf/ext/leonisite/Resources/Public/Build/Images/logo-leoni.svg?1680705667";

@@ -39,8 +39,7 @@ s.soup
   .then(() => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://cdn.cookielaw.org/logos/b0a5f2cc-0b29-4907-89bf-3f6b380a03c8/0814c8dd-07ff-41eb-a1b0-ee0294137c9a/9ca69c31-5e86-432d-950c-cfa7fcaa3cc8/1280px-Qualcomm-Logo.svg.png";

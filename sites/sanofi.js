@@ -48,8 +48,7 @@ s.get()
   .then(() => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://www.sanofi.ro/dam/jcr:9f06f321-3c2b-485f-8a84-b6c33badc56a/logo-header-color-large.png";

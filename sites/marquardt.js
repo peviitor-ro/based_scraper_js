@@ -46,41 +46,46 @@ s.soup.then((soup) => {
     customFieldRadios: [],
   };
 
-    const api = new scraper.ApiScraper(apiurl);
+  const api = new scraper.ApiScraper(apiurl);
 
-    api.headers.headers["Authorization"] = "Bearer " + token;
+  api.headers.headers["Authorization"] = "Bearer " + token;
 
-    let finalJobs = [];
+  let finalJobs = [];
 
-    api.post(data).then((d) => {
-        const jobs = d.data.requisitions;
-        
-        jobs.forEach((job) => {
-            const id = uuid.v4();
-            const job_title = job.displayJobTitle;
-            const job_link = "https://marquardt-group.csod.com/ux/ats/careersite/5/home/requisition/" + job.requisitionId + "?c=marquardt-group";
-            const country = "Romania";
-            const city = job.locations[0].city;
-            const company = "Marquardt";
+  api
+    .post(data)
+    .then((d) => {
+      const jobs = d.data.requisitions;
 
-            console.log(job_title + " -> " + city);
+      jobs.forEach((job) => {
+        const id = uuid.v4();
+        const job_title = job.displayJobTitle;
+        const job_link =
+          "https://marquardt-group.csod.com/ux/ats/careersite/5/home/requisition/" +
+          job.requisitionId +
+          "?c=marquardt-group";
+        const country = "Romania";
+        const city = job.locations[0].city;
+        const company = "Marquardt";
 
-            const jobObj = {
-                id: id,
-                job_title: job_title,
-                job_link: job_link,
-                country: country,
-                city: city,
-                company: company,
-            };
+        console.log(job_title + " -> " + city);
 
-            finalJobs.push(jobObj);
-        });
-    }).then(() => {
-        console.log("Total jobs: " + finalJobs.length);
+        const jobObj = {
+          id: id,
+          job_title: job_title,
+          job_link: job_link,
+          country: country,
+          city: city,
+          company: company,
+        };
 
-        const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-      const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+        finalJobs.push(jobObj);
+      });
+    })
+    .then(() => {
+      console.log("Total jobs: " + finalJobs.length);
+
+      scraper.postApiPeViitor(finalJobs, company);
 
       let logo =
         "https://upload.wikimedia.org/wikipedia/commons/0/03/MarquardtGroup-Logo-CIColor-on-Transparent.svg";
@@ -91,5 +96,4 @@ s.soup.then((soup) => {
       postLogo.headers.headers["Content-Type"] = "application/json";
       postLogo.post(JSON.stringify([{ id: "Marquardt", logo: logo }]));
     });
-
 });

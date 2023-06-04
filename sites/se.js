@@ -55,8 +55,7 @@ s.get().then((response) => {
   fetchData().then((jobs) => {
     console.log("Total jobs: " + jobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Schneider_Electric_2007.svg/284px-Schneider_Electric_2007.svg.png?20150906005100";

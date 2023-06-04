@@ -12,7 +12,7 @@ let exclude = [];
 files.forEach((file) => {
     if (!exclude.includes(file)) {
         child_process.exec("node " + "sites/" + file, (err, stdout, stderr) => {
-            if (err) {
+            if (stderr) {
                 console.log("Error scraping " + file);
                 console.log("Sending Trigger to API ...");
                 axios.post("https://dev.laurentiumarian.ro/scraper/based_scraper_js/", {
@@ -28,7 +28,8 @@ files.forEach((file) => {
                     console.log("Error sending trigger for " + file);
                     console.log(error);
                 });
-            } else {
+            } 
+            if (stdout) {
                 console.log("Success scraping " + file);
             }
         })

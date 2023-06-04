@@ -45,8 +45,7 @@ s.get()
   .then(() => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://www.henkel.ro/resource/blob/737324/1129f40d0df611e51758a0d35e6cab78/data/henkel-logo-standalone-svg.svg";

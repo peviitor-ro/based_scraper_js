@@ -70,8 +70,7 @@ s.post(data).then((d, err) => {
   fetchData().then((finalJobs) => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://freight.cargo.site/w/3000/q/75/i/ab331f52d894b36d5310e73ce4781b5b30e2e169459c3d655c7ef56d660a0b0c/Asset-134096.png";

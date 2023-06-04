@@ -44,8 +44,7 @@ s.get()
   .then(() => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     const logo =
       "https://cdn.icon-icons.com/icons2/3914/PNG/512/revolut_logo_icon_248648.png";

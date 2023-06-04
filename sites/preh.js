@@ -60,8 +60,7 @@ s.soup.then((soup) => {
   fetchData().then((finalJobs) => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://career.preh.com/fileadmin/templates/website/media/images/preh_logo.png";

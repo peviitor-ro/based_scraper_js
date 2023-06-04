@@ -64,8 +64,7 @@ s.soup.then((soup) => {
   fetchData().then((finalJobs) => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo = "https://rmkcdn.successfactors.com/c3583d3f/1a27f760-8f11-480e-b76b-f.png";
 

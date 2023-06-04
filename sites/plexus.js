@@ -69,8 +69,7 @@ s.post(data).then((response) => {
     .then(() => {
       console.log("Total jobs: " + jobs.length);
 
-      const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-      const postPeviitor = scraper.postApiPeViitor(apiKey, jobs, company);
+      scraper.postApiPeViitor(jobs, company);
 
       let logo =
         "https://www.plexus.com/PlexusCDN/plexus/media/english-media/logos/Plexus-Logo-212x42.svg";

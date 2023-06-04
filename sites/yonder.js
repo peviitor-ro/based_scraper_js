@@ -36,8 +36,7 @@ s.soup
   .then(() => {
     console.log("Total jobs: " + finalJobs.length);
 
-    const apiKey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
-    const postPeviitor = scraper.postApiPeViitor(apiKey, finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
       "https://tss-yonder.com/wp-content/themes/Yonder-1.4/images/yonder-logo.svg";
