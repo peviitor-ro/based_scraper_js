@@ -20,8 +20,6 @@ s.soup
       const id = uuid.v4();
       const job_title = job.find("h3").text.trim();
       const job_link = job.find("a").attrs.href;
-      const company = company.company;
-      const country = "Romania";
       const city = job.find("p").text.trim();
 
       console.log(job_title + " -> " + city);
@@ -30,9 +28,9 @@ s.soup
         id: id,
         job_title: job_title,
         job_link: job_link,
-        company: company,
+        company: company.company,
         city: city,
-        country: country,
+        country: "Romania",
       });
     });
   })
