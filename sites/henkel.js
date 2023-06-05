@@ -10,6 +10,7 @@ const company = { company: "Henkel" };
 let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
+s.headers.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)";
 
 s.get()
   .then((response) => {
