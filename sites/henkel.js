@@ -4,7 +4,7 @@ const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
 const url =
-  "https://www.henkel.ro/ajax/collection/ro/1338824-1338824/queryresults/asJson?Career_Level_18682=&Functional_Area_18674=&Digital_1030670=&Locations_279384=Europe&Europe_877522=ROU&search_filter=&startIndex=0&loadCount=10&ignoreDefaultFilterTags=true";
+  "https://www.henkel.ro/ajax/collection/ro/1338824-1338824/queryresults/asJson";
 
 const company = { company: "Henkel" };
 let finalJobs = [];
