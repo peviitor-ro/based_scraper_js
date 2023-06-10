@@ -10,6 +10,7 @@ const company = { company: "Bolt" };
 let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
+s.headers.headers["User-Agent"] = "Mozilla/5.0"
 
 s.get()
   .then((response) => {

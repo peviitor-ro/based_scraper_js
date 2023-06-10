@@ -13,12 +13,14 @@ const s = new scraper.Scraper(url);
 
 s.soup.then((soup) => {
   const totalJobs = parseInt(soup.find("div", { id: "countjobs" }).text.trim());
-  const pages = scraper.range(0, totalJobs, 20);
+  const pages = scraper.range(1, totalJobs, 20);
 
   const fetchData = () => {
     return new Promise((resolve, reject) => {
       pages.forEach((page) => {
-        let url = `https://preh8-portal.rexx-recruitment.com//job-offers.html?start=${page}&filter[volltext]=&filter[countr][]=Brasov&filter[countr][]=Iasi`;
+        let url = `https://preh8-portal.rexx-recruitment.com//job-offers.html?start=${
+          page - 1
+        }&filter[volltext]=&filter[countr][]=Brasov&filter[countr][]=Iasi`;
         const s = new scraper.Scraper(url);
         s.soup.then((soup) => {
           const jobs = soup.find("tbody").findAll("tr").slice(1);
