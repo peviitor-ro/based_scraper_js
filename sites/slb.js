@@ -12,10 +12,16 @@ const s = new scraper.Scraper(url);
 
 s.soup
   .then((response) => {
-    const jobs = response
-      .find("table", { id: "jobsTable" })
-      .find("tbody")
-      .findAll("tr");
+    let jobs = []
+    
+    try {
+      jobs = response
+        .find("table", { id: "jobsTable" })
+        .find("tbody")
+        .findAll("tr");
+    } catch (error) {
+      console.log(error);
+    }
 
     jobs.forEach((job) => {
       const country = job.findAll("td")[3].text.trim();
