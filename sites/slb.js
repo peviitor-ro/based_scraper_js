@@ -20,7 +20,7 @@ s.soup
         .find("tbody")
         .findAll("tr");
     } catch (error) {
-      console.log(error);
+      console.log({ "succes": "no jobs found" });
     }
 
     jobs.forEach((job) => {

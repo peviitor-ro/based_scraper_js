@@ -12,7 +12,7 @@ const s = new scraper.Scraper(url);
 
 s.soup
   .then((soup) => {
-    const jobs = soup.find("ul", { class: "menustellenboerse" }).findAll("li");
+    const jobs = soup.find("div", { id: "c4173" }).findAll("li");
 
     jobs.forEach((job) => {
       const id = uuid.v4();
