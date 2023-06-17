@@ -1,6 +1,5 @@
 "use strict"
-
-const scraper = require(".././peviitor_scraper.js");
+const scraper = require("../peviitor_scraper.js");
 const uuid = require('uuid');
 
 const url = "https://careerromania.autoliv.com/jobs";
@@ -18,24 +17,17 @@ s.soup.then((soup) => {
         const id = uuid.v4();
         const job_title = job.find("span", {"class":"company-link-style"}).text.trim();
         const job_link = job.find("a").attrs.href;
-        const company = "Autoliv";
-        const city = "Romania";
-        const country = "Romania";
 
-        console.log(job_title + " -> " + city);
-
-        const j = {
+        finalJobs.push({
             "id": id,
             "job_title": job_title,
             "job_link": job_link,
-            "company": company,
-            "city": city,
-            "country": country
-        }
-
-        finalJobs.push(j);
+            "company": company.company,
+            "city": "Romania",
+            "country": "Romania"
+        });
     });
 }).then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
     scraper.postApiPeViitor(finalJobs, company);
 });

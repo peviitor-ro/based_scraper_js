@@ -1,19 +1,23 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
 const url =
   "https://crowdstrike.wd5.myworkdayjobs.com/wday/cxs/crowdstrike/crowdstrikecareers/jobs";
 
-  const company = { company: "CrowdStrike" };
-  let finalJobs = [];
+const company = { company: "CrowdStrike" };
+let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
 s.headers.headers["Content-Type"] = "application/json";
 s.headers.headers["Accept"] = "application/json";
 
-let data = {"appliedFacets":{"locations":["27086a67c26901049dcca1f33f01ac08"]},"limit":20,"offset":0,"searchText":""};
+let data = {
+  appliedFacets: { locations: ["27086a67c26901049dcca1f33f01ac08"] },
+  limit: 20,
+  offset: 0,
+  searchText: "",
+};
 
 s.post(data).then((response) => {
   let step = 20;
@@ -50,20 +54,18 @@ s.post(data).then((response) => {
           job.externalPath;
         const city = job.locationsText.split(",")[0];
 
-        console.log(job_title + " -> " + city);
-
         jobs.push({
-            id: id,
-            job_title: job_title,
-            job_link: job_link,
-            company: company.company,
-            country: "Romania",
-            city: city,
-          });
+          id: id,
+          job_title: job_title,
+          job_link: job_link,
+          company: company.company,
+          country: "Romania",
+          city: city,
+        });
       });
     })
     .then(() => {
-      console.log("Total jobs: " + jobs.length);
+      console.log(jobs);
 
       scraper.postApiPeViitor(jobs, company);
 

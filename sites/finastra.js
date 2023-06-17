@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -31,9 +30,6 @@ s.get().then((response) => {
             const job_link = `https://careers.finastra.com/jobs/${job.data.slug}?lang=en-us`;
             const city = job.data.city;
 
-            console.log(job_title + " -> " + city);
-            console.log(job_link);
-
             finalJobs.push({
               id: id,
               job_title: job_title,
@@ -53,7 +49,7 @@ s.get().then((response) => {
   };
 
   fetchData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

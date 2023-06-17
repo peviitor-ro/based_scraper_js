@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -53,25 +52,20 @@ s.post(data).then((response) => {
         const job_link =
           "https://philips.wd3.myworkdayjobs.com/en-US/jobs-and-careers" +
           job.externalPath;
-        const country = "Romania";
         const city = job.locationsText.split(",")[0];
 
-        console.log(job_title + " -> " + city);
-
-        const jobObj = {
+        jobs.push({
           id: id,
           job_title: job_title,
           job_link: job_link,
           company: company.company,
-          country: country,
+          country: "Romania",
           city: city,
-        };
-
-        jobs.push(jobObj);
+        });
       });
     })
     .then(() => {
-      console.log("Total jobs: " + jobs.length);
+      console.log(jobs);
 
       scraper.postApiPeViitor(jobs, company);
 

@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -10,7 +9,7 @@ const company = { company: "Bolt" };
 let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
-s.headers.headers["User-Agent"] = "Mozilla/5.0"
+s.headers.headers["User-Agent"] = "Mozilla/5.0";
 
 s.get()
   .then((response) => {
@@ -23,25 +22,22 @@ s.get()
           const id = uuid.v4();
           const job_title = job.title;
           const job_link = "https://bolt.eu/en/careers/positions/" + job.id;
-          const country = "Romania";
           const city = location.city;
-
-          console.log(job_title + " -> " + city);
 
           finalJobs.push({
             id: id,
             job_title: job_title,
             job_link: job_link,
             company: company.company,
-            country: country,
+            country: "Romania",
             city: city,
           });
-        }
+        };
       });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

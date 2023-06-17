@@ -1,6 +1,5 @@
 "use strict";
-
-const scraper = require(".././peviitor_scraper.js");
+const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
 const url =
@@ -53,27 +52,21 @@ s.soup.then((soup) => {
           const job_link =
             "https://careers.yazaki.com" +
             job.find("a", { class: "jobTitle-link" }).attrs.href;
-          const company = "Yazaki";
           const city = job.find("span", { class: "jobFacility" }).text.trim();
-          const country = "Romania";
 
-          console.log(job_title + " -> " + city);
-
-          const j = {
+          finalJobs.push({
             id: id,
             job_title: job_title,
             job_link: job_link,
-            company: company,
+            company: company.company,
             city: city,
-            country: country,
-          };
-
-          finalJobs.push(j);
+            country: "Romania",
+          });
         }
       });
     })
     .then(() => {
-      console.log("Total jobs: " + finalJobs.length);
+      console.log(finalJobs);
 
       scraper.postApiPeViitor(finalJobs, company);
 
@@ -84,6 +77,6 @@ s.soup.then((soup) => {
         "https://api.peviitor.ro/v1/logo/add/"
       );
       postLogo.headers.headers["Content-Type"] = "application/json";
-      postLogo.post(JSON.stringify([{ id: "Yazaki", logo: logo }]));
+      postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
     });
 });

@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -51,33 +50,32 @@ s.soup.then((soup) => {
   let finalJobs = [];
   const company = { company: "Hella" };
 
-  api.post(data).then((d) => {
-    const jobs = d.data.requisitions;
+  api
+    .post(data)
+    .then((d) => {
+      const jobs = d.data.requisitions;
 
-    jobs.forEach((job) => {
-      const id = uuid.v4();
-      const job_title = job.displayJobTitle;
-      const job_link = "https://hella.csod.com/ux/ats/careersite/3/home/requisition/" + job.requisitionId + "?c=hella";
-      const company = "Hella";
-      const city = job.locations[0].city;
-      const country = "Romania";
+      jobs.forEach((job) => {
+        const id = uuid.v4();
+        const job_title = job.displayJobTitle;
+        const job_link =
+          "https://hella.csod.com/ux/ats/careersite/3/home/requisition/" +
+          job.requisitionId +
+          "?c=hella";
+        const city = job.locations[0].city;
 
-      console.log(job_title + " -> " + city);
-
-      const j = {
-        id: id,
-        job_title: job_title,
-        job_link: job_link,
-        company: company,
-        city: city,
-        country: country,
-      };
-
-      finalJobs.push(j);
+        finalJobs.push({
+          id: id,
+          job_title: job_title,
+          job_link: job_link,
+          company: company.company,
+          city: city,
+          country: "Romania",
+        });
+      });
+    })
+    .then(() => {
+      console.log(finalJobs);
+      scraper.postApiPeViitor(finalJobs, company);
     });
-  }).then(() => {
-    console.log("Total jobs: " + finalJobs.length);
-    scraper.postApiPeViitor(finalJobs, company);
-  });
 });
-

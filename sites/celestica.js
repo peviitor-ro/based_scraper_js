@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -44,25 +43,20 @@ s.soup.then((soup) => {
         const job_title = job.find("a").text.trim();
         const job_link =
           "https://careers.celestica.com" + job.find("a").attrs.href;
-        const company = "Celestica";
         const city = job.find("span", { class: "jobLocation" }).text.trim();
 
-        console.log(job_title + " -> " + city);
-
-        const j = {
+        finalJobs.push({
           id: id,
           job_title: job_title,
           job_link: job_link,
-          company: company,
+          company: company.company,
           city: city,
           country: "Romania",
-        };
-
-        finalJobs.push(j);
+        });
       });
     })
     .then(() => {
-      console.log("Final jobs: " + finalJobs.length);
+      console.log(finalJobs);
 
       scraper.postApiPeViitor(finalJobs, company);
 
@@ -73,6 +67,6 @@ s.soup.then((soup) => {
         "https://api.peviitor.ro/v1/logo/add/"
       );
       postLogo.headers.headers["Content-Type"] = "application/json";
-      postLogo.post(JSON.stringify([{ id: "Celestica", logo: logo }]));
+      postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
     });
 });

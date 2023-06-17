@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -58,24 +57,19 @@ s.post(data).then((d, err) => {
       const job_link =
         "https://adient.wd3.myworkdayjobs.com/en-US/External" +
         job.externalPath;
-      const company = "Adient";
       const city = job.locationsText;
-      const country = "Romania";
 
-      console.log(job_title + " -> " + city);
-
-      const j = {
+      finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
-        company: company,
+        company: company.company,
         city: city,
-        country: country,
-      };
-
-      finalJobs.push(j);
+        country: "Romania",
+      });
     });
-    console.log("Total jobs: " + finalJobs.length);
+
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -86,6 +80,6 @@ s.post(data).then((d, err) => {
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Adient", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });
 });

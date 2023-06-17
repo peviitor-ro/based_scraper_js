@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -20,39 +19,34 @@ s.get()
         const id = uuid.v4();
         const job_title = job.title;
         const job_link = "https://careers.ibm.com/job/" + job.id;
-        const company = "IBM";
         let city = "Romania";
+
         try {
           city = job.addtnl_locations[0].addtnl_city;
         } catch (error) {}
 
-        const country = "Romania";
-
-        console.log(job_title + " -> " + city);
-
-        const j = {
+        finalJobs.push({
           id: id,
           job_title: job_title,
           job_link: job_link,
-          company: company,
+          company: company.company,
           city: city,
-          country: country,
-        };
-
-        finalJobs.push(j);
+          country: "Romania",
+        });
       }
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
-    let logo = "https://cdn-static.findly.com/wp-content/uploads/sites/1432/2020/12/logo.png";
+    let logo =
+      "https://cdn-static.findly.com/wp-content/uploads/sites/1432/2020/12/logo.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "IBM", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });

@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -31,24 +30,18 @@ s.soup.then((soup) => {
             const job_link =
               "https://preh8-portal.rexx-recruitment.com/" +
               job.find("a").attrs.href;
-            const company = "Preh";
-            const country = "Romania";
             const city = job
               .find("td", { class: "real_table_col3" })
               .text.trim();
 
-            console.log(job_title + " -> " + city);
-
-            const jobObj = {
+            finalJobs.push({
               id: id,
               job_title: job_title,
               job_link: job_link,
-              company: company,
+              company: company.company,
               city: city,
-              country: country,
-            };
-
-            finalJobs.push(jobObj);
+              country: "Romania",
+            });
 
             if (finalJobs.length === totalJobs) {
               resolve(finalJobs);
@@ -60,7 +53,7 @@ s.soup.then((soup) => {
   };
 
   fetchData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -71,6 +64,6 @@ s.soup.then((soup) => {
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Preh", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });
 });

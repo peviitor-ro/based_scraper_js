@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -64,26 +63,20 @@ s.soup.then((soup) => {
           "https://marquardt-group.csod.com/ux/ats/careersite/5/home/requisition/" +
           job.requisitionId +
           "?c=marquardt-group";
-        const country = "Romania";
         const city = job.locations[0].city;
-        const company = "Marquardt";
 
-        console.log(job_title + " -> " + city);
-
-        const jobObj = {
+        finalJobs.push({
           id: id,
           job_title: job_title,
           job_link: job_link,
-          country: country,
+          country: "Romania",
           city: city,
-          company: company,
-        };
-
-        finalJobs.push(jobObj);
+          company: company.company,
+        });
       });
     })
     .then(() => {
-      console.log("Total jobs: " + finalJobs.length);
+      console.log(finalJobs);
 
       scraper.postApiPeViitor(finalJobs, company);
 
@@ -94,6 +87,6 @@ s.soup.then((soup) => {
         "https://api.peviitor.ro/v1/logo/add/"
       );
       postLogo.headers.headers["Content-Type"] = "application/json";
-      postLogo.post(JSON.stringify([{ id: "Marquardt", logo: logo }]));
+      postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
     });
 });

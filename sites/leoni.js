@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -53,7 +52,7 @@ s.post(data).then((res) => {
 
   let pages = scraper.range(0, totalJobs, step);
 
-  const fetcData =() => {
+  const fetcData = () => {
     return new Promise((resolve, reject) => {
       for (let i = 0; i < pages.length; i++) {
         data.pageNo = i + 1;
@@ -62,35 +61,31 @@ s.post(data).then((res) => {
           jobs.forEach((job) => {
             const id = uuid.v4();
             const job_title = job.column[0].trim();
-            const job_link = `https://leoni.taleo.net/careersection/ro_romania/jobdetail.ftl?job=${job.contestNo}&tz=GMT%2B03%3A00&tzname=Europe%2FBucharest`
-            const company = "Leoni";
-            const country = "Romania";
-            const city = job.column[2].replace(/[\["(.*)"\]]/g, '').split('-')[2];
+            const job_link = `https://leoni.taleo.net/careersection/ro_romania/jobdetail.ftl?job=${job.contestNo}&tz=GMT%2B03%3A00&tzname=Europe%2FBucharest`;
+            const city = job.column[2]
+              .replace(/[\["(.*)"\]]/g, "")
+              .split("-")[2];
 
-            console.log(job_title + " -> " + city);
-
-            const jobObj = {
+            finalJobs.push({
               id: id,
               job_title: job_title,
               job_link: job_link,
-              company: company,
+              company: company.company,
               city: city,
-              country: country,
-            };
-
-            finalJobs.push(jobObj);
+              country: "Romania",
+            });
 
             if (finalJobs.length === totalJobs) {
               resolve(finalJobs);
-            };
+            }
           });
         });
       }
     });
-  }; 
+  };
 
   fetcData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -101,6 +96,6 @@ s.post(data).then((res) => {
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Leoni", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });
-})
+});

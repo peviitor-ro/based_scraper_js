@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -53,26 +52,20 @@ s.post(data).then((response) => {
         const job_link =
           "https://flextronics.wd1.myworkdayjobs.com/ro-RO/Careers" +
           job.externalPath;
-        const company = "Flex";
-        const country = "Romania";
         const city = job.locationsText.split(",")[0];
 
-        console.log(job_title + " -> " + city);
-
-        const jobObj = {
+        jobs.push({
           id: id,
           job_title: job_title,
           job_link: job_link,
-          company: company,
-          country: country,
+          company: company.company,
+          country: "Romania",
           city: city,
-        };
-
-        jobs.push(jobObj);
+        });
       });
     })
     .then(() => {
-      console.log("Total jobs: " + jobs.length);
+      console.log(jobs);
 
       scraper.postApiPeViitor(jobs, company);
 
@@ -82,6 +75,6 @@ s.post(data).then((response) => {
         "https://api.peviitor.ro/v1/logo/add/"
       );
       postLogo.headers.headers["Content-Type"] = "application/json";
-      postLogo.post(JSON.stringify([{ id: "Flex", logo: logo }]));
+      postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
     });
 });

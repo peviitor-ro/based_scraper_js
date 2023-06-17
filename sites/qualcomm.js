@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -18,26 +17,23 @@ s.soup
       const id = uuid.v4();
       const job_title = job.find("a").text.trim();
       const job_link = "https://qualcomm.dejobs.org" + job.find("a").attrs.href;
-      const country = "Romania";
       const city = job
         .find("span", { class: "hiringPlace" })
         .text.split(",")[0]
         .trim();
 
-      console.log(job_title + " -> " + city);
-
       finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
-        country: country,
+        country: "Romania",
         city: city,
         company: company.company,
       });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

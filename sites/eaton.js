@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -22,26 +21,19 @@ s.get()
         "https://jobs.eaton.com/jobs/" +
         job.data.slug +
         "?lang=en-us&previousLocale=en-US";
-      const company = "Eaton";
-      const country = "Romania";
-      const city = "Romania";
 
-      console.log(job_title + " -> " + city);
-
-      const j = {
+      finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
         company: company,
-        city: city,
-        country: country,
-      };
-
-      finalJobs.push(j);
+        city: "Romania",
+        country: "Romania",
+      });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -51,5 +43,5 @@ s.get()
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Eaton", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });

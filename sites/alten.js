@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -26,17 +25,14 @@ s.get().then((response) => {
             const id = uuid.v4();
             const job_title = job.titlu;
             const job_link = "https://careers.altenromania.ro/job/" + job.id;
-            const country = "Romania";
             const city = job.locatie;
-
-            console.log(job_title + " -> " + city);
 
             finalJobs.push({
               id: id,
               job_title: job_title,
               job_link: job_link,
               company: company.company,
-              country: country,
+              country: "Romania",
               city: city,
             });
           });
@@ -50,7 +46,7 @@ s.get().then((response) => {
   };
 
   fetchData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

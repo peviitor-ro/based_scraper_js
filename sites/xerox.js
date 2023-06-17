@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -19,31 +18,29 @@ s.soup
       const id = uuid.v4();
       const job_title = job.find("a").text.trim();
       const job_link = job.find("a").attrs.href;
-      const country = "Romania";
       const city = job
         .find("div", { class: "article__header__text__subtitle" })
         .findAll("p")[0]
         .text.split(":")[1]
         .trim();
 
-      console.log(job_title + " -> " + city);
-
       finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
         company: company.company,
-        country: country,
+        country: "Romania",
         city: city,
       });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
-    let logo = "https://1000logos.net/wp-content/uploads/2017/05/Xerox-logo-768x369.png";
+    let logo =
+      "https://1000logos.net/wp-content/uploads/2017/05/Xerox-logo-768x369.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"

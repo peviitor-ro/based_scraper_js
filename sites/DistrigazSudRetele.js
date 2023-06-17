@@ -2,33 +2,31 @@
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-let url = "https://www.cegeka.com/en/ro/jobs/all-jobs?";
+const url = "https://www.distrigazsud-retele.ro/cariere/posturi-disponibile/";
 
-const company = { company: "Cegeka" };
+const company = { company: "DistrigazSudRetele" };
 let finalJobs = [];
 
 const s = new scraper.Scraper(url);
-const pattern = /let vacancies = \[{(.*)}\]/gm;
 
 s.soup
   .then((soup) => {
-    const jobsObject = soup.text.match(pattern);
-    const jobs = JSON.parse(jobsObject[0].replace("let vacancies = ", ""));
+    const jobs = soup.find("div", { class: "general-text" }).findAll("a");
 
-    jobs.forEach((job) => {
+    for (let i = 0; i < jobs.length - 2; i++) {
       const id = uuid.v4();
-      const job_title = job.header_data.vacancy_title;
-      const job_link = job.slug;
+      const job_title = jobs[i].text;
+      const job_link = jobs[i].attrs.href;
 
       finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
         company: company.company,
-        country: "Romania",
         city: "Romania",
+        country: "Romania",
       });
-    });
+    }
   })
   .then(() => {
     console.log(finalJobs);
@@ -36,7 +34,7 @@ s.soup
     scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
-      "https://www.cegeka.com/hubfs/Cegeka%20Website%20-%202017/Logo/cegeka-logo-color.png";
+      "https://www.distrigazsud-retele.ro/wp-content/themes/distrigaz/images/logo-footer.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"

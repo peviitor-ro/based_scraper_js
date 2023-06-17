@@ -1,13 +1,12 @@
 "use strict"
-
-const scraper = require(".././peviitor_scraper.js");
+const scraper = require("../peviitor_scraper.js");
 const uuid = require('uuid');
 
 const url = "https://amdaris.com/jobs/";
 
 const s = new scraper.Scraper(url);
 
-const locations = ["bucharest", "timisoara", "romania"]
+const locations = ["bucharest", "timisoara", "romania"];
 
 let finalJobs = [];
 const company = {"company":"Amdaris"};
@@ -21,24 +20,20 @@ s.soup.then((soup) => {
             const id = uuid.v4();
             const job_title = job.find("a").text.trim();
             const job_link = job.find("a").attrs.href;
-            const company = "Amdaris";
             const city = location;
-            const country = "Romania";
 
             finalJobs.push({
                 "id": id,
                 "job_title": job_title,
                 "job_link": job_link,
-                "company": company,
+                "company": company.company,
                 "city": city,
-                "country": country
+                "country": "Romania"
             });
-
-            console.log(job_title + " -> " + city);
-        }
-    }
+        };
+    };
 }).then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
     scraper.postApiPeViitor(finalJobs, company);
 });
 

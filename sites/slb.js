@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -12,15 +11,15 @@ const s = new scraper.Scraper(url);
 
 s.soup
   .then((response) => {
-    let jobs = []
-    
+    let jobs = [];
+
     try {
       jobs = response
         .find("table", { id: "jobsTable" })
         .find("tbody")
         .findAll("tr");
     } catch (error) {
-      console.log({ "succes": "no jobs found" });
+      console.log({ succes: "no jobs found" });
     }
 
     jobs.forEach((job) => {
@@ -40,21 +39,19 @@ s.soup
 
         const city = job.findAll("td")[2].text.trim();
 
-        console.log(job_title + " -> " + city);
-
         finalJobs.push({
           id: id,
           job_title: job_title,
           job_link: job_link,
           city: city,
-          country: "Romania",
+          country: country,
           company: company.company,
         });
       }
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

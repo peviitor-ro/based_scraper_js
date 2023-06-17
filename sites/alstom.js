@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -46,8 +45,6 @@ s.soup.then((soup) => {
           "https://jobsearch.alstom.com" + job.find("a").attrs.href;
         const city = job.find("span", { class: "jobLocation" }).text.split(",")[0].trim();
 
-        console.log(job_title + " -> " + city);
-
         finalJobs.push({
             id: id,
             job_title: job_title,
@@ -59,7 +56,7 @@ s.soup.then((soup) => {
       });
     })
     .then(() => {
-      console.log("Final jobs: " + finalJobs.length);
+      console.log(finalJobs);
 
       scraper.postApiPeViitor(finalJobs, company);
 

@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -29,18 +28,14 @@ s.get().then((response) => {
             const id = uuid.v4();
             const job_title = job.title;
             const job_link = job.meta_data.job_description_url;
-            const country = "Romania";
-            const city = "Romania";
-
-            console.log(job_title + " -> " + city);
 
             finalJobs.push({
               id: id,
               job_title: job_title,
               job_link: job_link,
               company: company.company,
-              city: city,
-              country: country,
+              city: "Romania",
+              country: "Romania",
             });
 
             if (finalJobs.length === totalJobs) {
@@ -53,7 +48,7 @@ s.get().then((response) => {
   };
 
   fetchData().then((jobs) => {
-    console.log("Total jobs: " + jobs.length);
+    console.log(jobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

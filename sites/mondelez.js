@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -46,8 +45,6 @@ s.soup.then((response) => {
               city = "Romania";
             }
 
-            console.log(job_title + " -> " + city);
-
             finalJobs.push({
               id: id,
               job_title: job_title,
@@ -67,11 +64,12 @@ s.soup.then((response) => {
   };
 
   fetchData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
-    let logo = "https://www.mondelezinternational.com/-/media/Mondelez/Media/Asset-Library/logos/MDLZlogo.jpg";
+    let logo =
+      "https://www.mondelezinternational.com/-/media/Mondelez/Media/Asset-Library/logos/MDLZlogo.jpg";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"

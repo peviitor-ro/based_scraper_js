@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -35,19 +34,16 @@ s.soup.then((soup) => {
             const job_link =
               "https://jobs.vitesco-technologies.com" +
               job.find("a").attrs.href;
-            const country = "Romania";
             const city = job
               .find("span", { class: "jobLocation" })
               .text.split(",")[0]
               .trim();
 
-            console.log(job_title + " -> " + city);
-
             finalJobs.push({
               id: id,
               job_title: job_title,
               job_link: job_link,
-              country: country,
+              country: "Romania",
               city: city,
               company: company.company,
             });
@@ -62,11 +58,12 @@ s.soup.then((soup) => {
   };
 
   fetchData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
-    let logo = "https://rmkcdn.successfactors.com/c3583d3f/1a27f760-8f11-480e-b76b-f.png";
+    let logo =
+      "https://rmkcdn.successfactors.com/c3583d3f/1a27f760-8f11-480e-b76b-f.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"

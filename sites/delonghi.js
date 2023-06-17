@@ -1,7 +1,7 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
+
 const country_id = [165, 175];
 const urls = {
   url: "https://www.delonghigroup.com/en/views/ajax?_wrapper_format=drupal_ajax",
@@ -55,26 +55,19 @@ fetchData()
       const job_title = job.find("h3").text;
       const job_link =
         "https://www.delonghigroup.com" + job.find("a").attrs.href;
-      const company = "DeLonghi";
-      const city = "Romania";
-      const country = "Romania";
 
-      console.log(job_title + " -> " + city);
-
-      const jobObj = {
+      finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
-        company: company,
-        city: city,
-        country: country,
-      };
-
-      finalJobs.push(jobObj);
+        company: company.company,
+        city: "Romania",
+        country: "Romania",
+      });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -85,5 +78,5 @@ fetchData()
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "DeLonghi", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });

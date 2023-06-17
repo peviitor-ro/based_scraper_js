@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -18,27 +17,23 @@ s.soup
       const id = uuid.v4();
       const job_title = job.find("a").text.trim();
       const job_link = "https://www.regnology.net" + job.find("a").attrs.href;
-      const city = "Romania";
-
-      console.log(job_title + " -> " + city);
 
       finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
-        city: city,
+        city: "Romania",
         country: "Romania",
         company: company.company,
       });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
-    let logo =
-      "https://www.altfi.com/images/companies/regnology.png";
+    let logo = "https://www.altfi.com/images/companies/regnology.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"

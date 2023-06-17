@@ -1,12 +1,11 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
 let url =
   "https://www.heidelbergcement.ro/ro/anunturi-de-angajare?field_job_offer_entry_level=16&field_job_offer_contract_type=13";
-const company = { company: "HeidelbergCement" };
 
+const company = { company: "HeidelbergCement" };
 
 let s = new scraper.Scraper(url);
 
@@ -55,22 +54,15 @@ s.soup.then((soup) => {
             const job_title = job.find("h3").text;
             const job_link =
               "https://www.heidelbergcement.ro" + job.find("a").attrs.href;
-            const company = "HeidelbergCement";
-            const country = "Romania";
-            const city = "Romania";
 
-            console.log(job_title + " -> " + city);
-
-            const jobObj = {
+            finalJobs.push({
               id: id,
               job_title: job_title,
               job_link: job_link,
-              company: company,
-              country: country,
-              city: city,
-            };
-
-            finalJobs.push(jobObj);
+              company: company.company,
+              country: "Romania",
+              city: "Romania",
+            });
 
             if (finalJobs.length === totalJobs) {
               resolve(finalJobs);
@@ -82,7 +74,7 @@ s.soup.then((soup) => {
   };
 
   fetchData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -93,6 +85,6 @@ s.soup.then((soup) => {
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "HeidelbergCement", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });
 });

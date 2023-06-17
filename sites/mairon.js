@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -22,8 +21,6 @@ s.soup
       const job_link = job.find("a").attrs.href;
       const city = job.find("p").text.trim();
 
-      console.log(job_title + " -> " + city);
-      
       finalJobs.push({
         id: id,
         job_title: job_title,
@@ -35,7 +32,7 @@ s.soup
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -46,5 +43,5 @@ s.soup
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Mairon", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });

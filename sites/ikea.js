@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -10,42 +9,47 @@ const company = { company: "IKEA" };
 let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
-s.headers.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+s.headers.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)";
 
-s.get().then((response) => {
-    const jobs = scraper.soup(response.results).findAll("li", {class:"search-results-tile-item"});
+s.get()
+  .then((response) => {
+    const jobs = scraper
+      .soup(response.results)
+      .findAll("li", { class: "search-results-tile-item" });
 
     jobs.forEach((job) => {
-        const id = uuid.v4();
-        const job_title = job.find("h3", {class:"tile-item-title"}).text.trim();
-        const job_link = "https://ro-jobs.about.ikea.com" + job.find("a").attrs.href;
-        const company = "IKEA";
-        const country = "Romania";
-        const city = job.find("span", {class:"tile-job-location"}).text.split(",")[0].trim();
-        
-        console.log(job_title + " -> " + city);
+      const id = uuid.v4();
+      const job_title = job
+        .find("h3", { class: "tile-item-title" })
+        .text.trim();
+      const job_link =
+        "https://ro-jobs.about.ikea.com" + job.find("a").attrs.href;
+      const city = job
+        .find("span", { class: "tile-job-location" })
+        .text.split(",")[0]
+        .trim();
 
-        const jobObj = {
-            id: id,
-            job_title: job_title,
-            job_link: job_link,
-            company: company,
-            city: city,
-            country: country,
-        };
-
-        finalJobs.push(jobObj);
+      finalJobs.push({
+        id: id,
+        job_title: job_title,
+        job_link: job_link,
+        company: company.company,
+        city: city,
+        country: "Romania",
+      });
     });
-}).then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+  })
+  .then(() => {
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
-    let logo = "https://tbcdn.talentbrew.com/company/22908/img/logo/logo-10872-12036.png";
+    let logo =
+      "https://tbcdn.talentbrew.com/company/22908/img/logo/logo-10872-12036.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "IKEA", logo: logo }]));
-});
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
+  });

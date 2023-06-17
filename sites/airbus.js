@@ -1,19 +1,17 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-const url =
-  "https://ag.wd3.myworkdayjobs.com/wday/cxs/ag/Airbus/jobs";
+const url = "https://ag.wd3.myworkdayjobs.com/wday/cxs/ag/Airbus/jobs";
 
-  const company = { company: "Airbus" };
-  let finalJobs = [];
+const company = { company: "Airbus" };
+let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
 s.headers.headers["Content-Type"] = "application/json";
 s.headers.headers["Accept"] = "application/json";
 
-let data = {"appliedFacets":{},"limit":20,"offset":0,"searchText":"Romania"};
+let data = { appliedFacets: {}, limit: 20, offset: 0, searchText: "Romania" };
 
 s.post(data).then((response) => {
   let step = 20;
@@ -46,32 +44,25 @@ s.post(data).then((response) => {
         const id = uuid.v4();
         const job_title = job.title;
         const job_link =
-          "https://ag.wd3.myworkdayjobs.com/en-US/Airbus" +
-          job.externalPath;
+          "https://ag.wd3.myworkdayjobs.com/en-US/Airbus" + job.externalPath;
         const city = job.locationsText.split(",")[0];
 
-        console.log(job_title + " -> " + city);
-        
-
-        const jobObj = {
+        jobs.push({
           id: id,
           job_title: job_title,
           job_link: job_link,
           company: company.company,
           country: "Romania",
           city: city,
-        };
-
-        jobs.push(jobObj);
+        });
       });
     })
     .then(() => {
-      console.log("Total jobs: " + jobs.length);
+      console.log(jobs);
 
       scraper.postApiPeViitor(jobs, company);
 
-      let logo =
-        "https://ag.wd3.myworkdayjobs.com/Airbus/assets/logo";
+      let logo = "https://ag.wd3.myworkdayjobs.com/Airbus/assets/logo";
 
       let postLogo = new scraper.ApiScraper(
         "https://api.peviitor.ro/v1/logo/add/"

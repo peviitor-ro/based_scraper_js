@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -11,32 +10,26 @@ let finalJobs = [];
 
 const s = new scraper.ApiScraper(url);
 
-s.get().then((response) => {
-  const jobs = response.stories;
+s.get()
+  .then((response) => {
+    const jobs = response.stories;
 
     jobs.forEach((job) => {
-        const id = uuid.v4();
-        const job_title = job.name;
-        const job_link = "https://www.ddroidd.com/" + job.full_slug;
-        const company = "DDroidd";
-        const country = "Romania";
-        const city = "Romania";
+      const id = uuid.v4();
+      const job_title = job.name;
+      const job_link = "https://www.ddroidd.com/" + job.full_slug;
 
-        console.log(job_title + " -> " + city);
-
-        const jobObj = {
-            id: id,
-            job_title: job_title,
-            job_link: job_link,
-            company: company,
-            city: city,
-            country: country,
-        };
-
-        finalJobs.push(jobObj);
+      finalJobs.push({
+        id: id,
+        job_title: job_title,
+        job_link: job_link,
+        company: company.company,
+        city: "Romania",
+        country: "Romania",
+      });
     });
-}).then(() => {
-    console.log("Total jobs: " + finalJobs.length);
-
+  })
+  .then(() => {
+    console.log(finalJobs);
     scraper.postApiPeViitor(finalJobs, company);
-});
+  });

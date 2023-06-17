@@ -1,9 +1,9 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
 let url = "https://www.romcim.ro/cariere/locuri-de-munca-si-stagii/";
+
 const company = { company: "Romcim" };
 let finalJobs = [];
 
@@ -17,26 +17,20 @@ s.soup
       const id = uuid.v4();
       const job_title = job.find("a").text.trim();
       const job_link = job.find("a").attrs.href;
-      const company = "Romcim";
-      const country = "Romania";
       const city = job.find("span").text.trim();
 
-      console.log(job_title + " -> " + city);
-
-      const jobObj = {
+      finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
-        company: company,
-        country: country,
+        company: company.company,
+        country: "Romania",
         city: city,
-      };
-
-      finalJobs.push(jobObj);
+      });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -47,5 +41,5 @@ s.soup
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Romcim", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });

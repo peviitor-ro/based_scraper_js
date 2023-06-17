@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -20,23 +19,20 @@ s.soup
         .find("div", { class: "position-title" })
         .text.trim();
       const job_link = job.find("a", { class: "position-link" }).attrs.href;
-      const country = "Romania";
       const city = job.find("div", { class: "position-location" }).text.trim();
-
-      console.log(job_title + " -> " + city);
 
       finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
-        country: country,
+        country: "Romania",
         city: city,
         company: company.company,
       });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

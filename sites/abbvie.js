@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 const jssoup = require("jssoup").default;
@@ -34,8 +33,6 @@ s.get()
         .text.split(",")[0]
         .trim();
 
-      console.log(job_title + " -> " + city);
-
       finalJobs.push({
         id: id,
         job_title: job_title,
@@ -47,7 +44,7 @@ s.get()
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

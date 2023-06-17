@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -21,23 +20,20 @@ s.get()
       const job_link =
         "https://careers.db.com/professionals/search-roles/#/professional/job/" +
         job.MatchedObjectDescriptor.PositionID;
-      const country = "Romania";
       const city = job.MatchedObjectDescriptor.OrganizationName;
-
-      console.log(job_title + " -> " + city);
 
       finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
         company: company.company,
-        country: country,
+        country: "Romania",
         city: city,
       });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 

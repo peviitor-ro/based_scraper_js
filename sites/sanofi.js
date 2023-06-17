@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -24,29 +23,23 @@ s.get()
       const id = uuid.v4();
       const job_title = job.find("h2").text.trim();
       const job_link = "https://en.jobs.sanofi.com" + job.find("a").attrs.href;
-      const company = "Sanofi";
-      const country = "Romania";
       const city = job
         .find("span", { class: "job-location" })
         .text.split(",")[0]
         .trim();
 
-      console.log(job_title + " -> " + city);
-
-      const jobObj = {
+      finalJobs.push({
         id: id,
         job_title: job_title,
         job_link: job_link,
-        company: company,
+        company: company.company,
         city: city,
-        country: country,
-      };
-
-      finalJobs.push(jobObj);
+        country: "Romania",
+      });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -57,5 +50,5 @@ s.get()
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Sanofi", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });

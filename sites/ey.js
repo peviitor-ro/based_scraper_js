@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -34,24 +33,19 @@ s.soup.then((response) => {
             const job_title = job.find("a").text;
             const job_link =
               "https://careers.ey.com" + job.find("a").attrs.href;
-            const country = "Romania";
             const city = job
               .find("span", { class: "jobLocation" })
               .text.split(",")[0]
               .trim();
 
-            console.log(job_title + " -> " + city);
-
-            const jobObj = {
+            finalJobs.push({
               id: id,
               job_title: job_title,
               job_link: job_link,
               company: company.company,
-              country: country,
+              country: "Romania",
               city: city,
-            };
-
-            finalJobs.push(jobObj);
+            });
           });
           if (finalJobs.length === totalJobs) {
             resolve(finalJobs);
@@ -62,7 +56,7 @@ s.soup.then((response) => {
   };
 
   fetchData().then((finalJobs) => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -73,6 +67,6 @@ s.soup.then((response) => {
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "EY", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });
 });

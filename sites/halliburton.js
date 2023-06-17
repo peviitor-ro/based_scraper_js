@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -44,22 +43,23 @@ s.soup.then((soup) => {
         const job_title = job.find("a").text.trim();
         const job_link =
           "https://jobs.halliburton.com" + job.find("a").attrs.href;
-        const city = job.find("span", { class: "jobLocation" }).text.split(",")[0].trim();
-
-        console.log(job_title + " -> " + city);
+        const city = job
+          .find("span", { class: "jobLocation" })
+          .text.split(",")[0]
+          .trim();
 
         finalJobs.push({
-            id: id,
-            job_title: job_title,
-            job_link: job_link,
-            company: company.company,
-            city: city,
-            country: "Romania",
-          });
+          id: id,
+          job_title: job_title,
+          job_link: job_link,
+          company: company.company,
+          city: city,
+          country: "Romania",
+        });
       });
     })
     .then(() => {
-      console.log("Final jobs: " + finalJobs.length);
+      console.log(finalJobs);
 
       scraper.postApiPeViitor(finalJobs, company);
 

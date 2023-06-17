@@ -1,5 +1,4 @@
 "use strict";
-
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
@@ -22,28 +21,21 @@ s.soup
           const id = uuid.v4();
           const job_title = job.text;
           const job_link = "https://www.revolut.com/careers/position/" + job.id;
-          const company = "Revolut";
-          const city = "Romania";
-          const country = "Romania";
 
-          console.log(job_title + " -> " + city);
-
-          const j = {
+          finalJobs.push({
             id: id,
             job_title: job_title,
             job_link: job_link,
-            company: company,
-            city: city,
-            country: country,
-          };
-
-          finalJobs.push(j);
+            company: company.company,
+            city: "Romania",
+            country: "Romania",
+          });
         }
       });
     });
   })
   .then(() => {
-    console.log("Total jobs: " + finalJobs.length);
+    console.log(finalJobs);
 
     scraper.postApiPeViitor(finalJobs, company);
 
@@ -54,5 +46,5 @@ s.soup
       "https://api.peviitor.ro/v1/logo/add/"
     );
     postLogo.headers.headers["Content-Type"] = "application/json";
-    postLogo.post(JSON.stringify([{ id: "Revolut", logo: logo }]));
+    postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
   });
