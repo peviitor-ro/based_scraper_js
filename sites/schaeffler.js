@@ -58,7 +58,7 @@ s.soup.then((soup) => {
   };
 
   fetchData().then((jobs) => {
-    console.log(jobs);
+    console.log(JSON.stringify(jobs, null, 2));
     scraper.postApiPeViitor(jobs, company);
   });
 });

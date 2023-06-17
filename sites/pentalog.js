@@ -55,6 +55,6 @@ s.post(data)
     });
   })
   .then(() => {
-    console.log(finalJobs);
+    console.log(JSON.stringify(finalJobs, null, 2));
     scraper.postApiPeViitor(finalJobs, company);
   });

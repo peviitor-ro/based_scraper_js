@@ -85,7 +85,7 @@ s.post(data).then((res) => {
   };
 
   fetcData().then((finalJobs) => {
-    console.log(finalJobs);
+    console.log(JSON.stringify(finalJobs, null, 2));
 
     scraper.postApiPeViitor(finalJobs, company);
 
