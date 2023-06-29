@@ -25,7 +25,8 @@ s.soup.then((soup) => {
         .findAll("h2")[2]
         .findAll("strong")[1]
         .text.trim()
-    ) - 5;
+    );
+
   const steps = scraper.range(0, totalJobs, 50);
 
   let jobs = [];
