@@ -26,7 +26,7 @@ s.get()
         id: id,
         job_title: job_title,
         job_link: job_link,
-        company: company,
+        company: company.company,
         city: "Romania",
         country: "Romania",
       });
