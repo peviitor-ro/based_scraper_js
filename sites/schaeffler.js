@@ -34,7 +34,6 @@ s.soup.then((soup) => {
             const job_title = job.find("a").text.trim();
             const job_link =
               "https://jobs.schaeffler.com" + job.find("a").attrs.href;
-            const company = "Schaeffler";
             const city = job
               .find("div", { class: "city" })
               .find("div")
@@ -59,6 +58,7 @@ s.soup.then((soup) => {
 
   fetchData().then((jobs) => {
     console.log(JSON.stringify(jobs, null, 2));
+    console.log(jobs.length);
     scraper.postApiPeViitor(jobs, company);
   });
 });
