@@ -7,7 +7,7 @@ let axios = require('axios');
 
 let files = fs.readdirSync(__dirname + "/sites");
 
-let exclude = [];
+let exclude = ["endava.js"];
 
 files.forEach((file) => {
     if (!exclude.includes(file)) {
