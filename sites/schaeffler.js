@@ -10,15 +10,11 @@ const s = new scraper.Scraper(url);
 s.soup.then((soup) => {
   let jobs = [];
   const company = { company: "Schaeffler" };
-  const range = (start, stop, step) =>
-    Array.from(
-      { length: (stop - start) / step + 1 },
-      (_, i) => start + i * step
-    );
+
   let pattern = /jobRecordsFound: parseInt\("(.*)"\)/g;
 
   const totalJobs = parseInt(soup.text.match(pattern)[0].split('"')[1]);
-  const steps = range(0, totalJobs, 100);
+  const steps = scraper.range(0, totalJobs, 100);
 
   let fetchData = () => {
     return new Promise((resolve, reject) => {
@@ -58,7 +54,6 @@ s.soup.then((soup) => {
 
   fetchData().then((jobs) => {
     console.log(JSON.stringify(jobs, null, 2));
-    console.log(jobs.length);
     scraper.postApiPeViitor(jobs, company);
   });
 });
