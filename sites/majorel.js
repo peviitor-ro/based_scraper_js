@@ -55,6 +55,14 @@ async function data() {
   });
 
   console.log(JSON.stringify(finalJobs, null, 2));
+  scraper.postApiPeViitor(finalJobs, company);
+
+  let logo =
+    "https://www.majorel.com/wp-content/themes/majorel/_frontend/assets/icons/logo.svg";
+
+  let postLogo = new scraper.ApiScraper("https://api.peviitor.ro/v1/logo/add/");
+  postLogo.headers.headers["Content-Type"] = "application/json";
+  postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
 }
 
 data();
