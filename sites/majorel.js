@@ -2,59 +2,38 @@
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-const url = 
-"https://jobs.majorel.com/romania/en/jobs?lang=en&api=jobs&site=28&_";
+const url = "https://jobs.majorel.com/romania/en/jobs?lang=en&api=jobs&site=28&_";
 
 const company = { company: "Majorel" };
 let finalJobs = [];
- let jobs = [];
-let pages = 1
+let pages = 1;
+
 const fetchData = (pages) => {
-   
-    return new Promise((resolve, reject) => {
-     
-                  const url = `https://jobs.majorel.com/romania/en/jobs?pg=${pages}&lang=en&api=jobs&site=28&_`;
+  return new Promise((resolve, reject) => {
+    const url = `https://jobs.majorel.com/romania/en/jobs?pg=${pages}&lang=en&api=jobs&site=28&_`;
+    const s = new scraper.ApiScraper(url);
 
-        const s = new scraper.ApiScraper(url);
-
-        s.get().then((response) => {
-          
-          response.forEach((job) => {
-            jobs.push(job);
-          });
-          if (response.length === 0) {
-          
-            resolve(jobs);
-        console.log(response.length)
-
-        
-          }
-           
-
-        });
-       
-        
-
-  
-      
+    s.get().then((response) => {
+      resolve(response); // Resolve with the response directly
     });
-  };
-  async function data (){
-while (true){
-    await fetchData(pages).then((jobs) =>{
+  });
+};
 
-    console.log(jobs.length)
-    return jobs
-})
-pages ++
-if (pages == 4){
-    console.log(jobs.length)
-    break
+async function data() {
+  let jobs = [];
+  let fetchedJobs;
+
+  do {
+    fetchedJobs = await fetchData(pages);
+    jobs = jobs.concat(fetchedJobs);
+    pages++;
+  } while (fetchedJobs.length > 0);
+
+  console.log(jobs.length);
+  return jobs;
 }
-}
-data()
-console.log(data())
-  }
+
+data();
 
 
 
