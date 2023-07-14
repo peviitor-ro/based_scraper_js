@@ -18,7 +18,7 @@ const fetchJobs = (offset) => {
       "filters": {},
       "commute_filter": {},
       "offset": offset,
-      "jobs_per_page": 261
+      "jobs_per_page": 300
     }
   };
 
@@ -46,11 +46,7 @@ const fetchJobs = (offset) => {
 };
 
 let finalJobs = [];
-
-// Make the first request with offset 0
 const request1 = fetchJobs(0);
-
-// Make the second request with offset 100
 const request2 = fetchJobs(100);
 const request3 = fetchJobs(200);
 
@@ -61,7 +57,6 @@ Promise.all([request1, request2, request3])
     const concatenatedData = responseDataArray.reduce((result, responseData) => {
       return result.concat(responseData.results);
     }, []);
-    //  console.log (concatenatedData.length)
          concatenatedData.forEach(item => {
          delete item.job.id;
          delete item.job.language_code;
@@ -85,7 +80,6 @@ Promise.all([request1, request2, request3])
          filteredResults.forEach(item => {
            const id = uuid.v4();
            jobTitle = item.job.title;
-          //  console.log(jobTitle);
            const externalPath = "https://www.pentasia.com/jobs/" + item.job.url_slug;
      
            finalJobs.push({
