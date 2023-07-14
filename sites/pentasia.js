@@ -1,12 +1,14 @@
-// "use strict";
-// const scraper = require("../peviitor_scraper.js");
-// const uuid = require("uuid");
+"use strict";
+const scraper = require("../peviitor_scraper.js");
+const uuid = require("uuid");
 
 const url = 'https://www.pentasia.com/_sf/api/v1/jobs/search.json'  // Replace with the actual API endpoint
 const requestBody = {
   "job_search":{"query":"","location":{"address":"","radius":0,"region":"","radius_units":"miles"},"filters":{},"commute_filter":{},"offset":0,"jobs_per_page":261}
 };
-
+let finalJobs = [];
+const company = { company: "Dynata" };
+const country = { country: "Romania" };
 fetch(url, {
   method: 'POST',
   body: JSON.stringify(requestBody),
@@ -31,11 +33,73 @@ fetch(url, {
   .then(response => response.json())
   .then(responseData => {
     // Handle the JSON response data here
-    console.log(responseData);
-    // const jsonParse = JSON.parse(responseData);
-    // console.log(jsonParse);
+    const jobObject = responseData.results;
+    jobObject.forEach(item => {
+    delete item.job.id;
+    delete item.job.description;
+    delete item.job.language_code;
+    delete item.job.url_slug;
+    delete item.job.salary_package;
+    delete item.job.created_at;
+    delete item.job.published_at;
+    delete item.job.updated_at;
+
+    delete item.job.expires_at;
+    delete item.job.featured;
+    delete item.title_snippet;
+    delete item.summary;
+    delete item.job.derived_info.job_categories;
+    delete item.text_snippet;
+    delete item.commute_info;
+    delete item.job.categories;
+    })
+    
+    console.log(jobObject.length);
+
+    const filteredResults = jobObject.filter(obj => {
+      return obj.job.addresses.toString().includes('Romania');
+        
+    });
+    
+    console.log(filteredResults);
+
+    filteredResults.forEach(item => {
+      const id = uuid.v4();
+      const jobTitle = item.job.title;
+      console.log(jobTitle);
+      const jobCountry = item.job.addresses[0];
+      console.log(jobCountry);
+
+
+
+
+    //   finalJobs.push({
+    //     id: id,
+    //     job_title: jobTitle,
+    //     job_link: externalPath,
+    //     country: "Romania",
+    //     city: "",
+    //     company: company.company,
+    //   });
+
+    })
    
   })
+  // .then(() => {
+  //   console.log(JSON.stringify(finalJobs, null, 2));
+
+  //   scraper.postApiPeViitor(finalJobs, company);
+
+  //   let logo =
+  //     "https://evolvetoday.ro/wp-content/uploads/2019/09/logo.svg";
+
+  //   let postLogo = new scraper.ApiScraper(
+  //     "https://api.peviitor.ro/v1/logo/add/"
+  //   );
+  //   postLogo.headers.headers["Content-Type"] = "application/json";
+  //   postLogo.post(JSON.stringify([{ id: company.company, logo: logo }]));
+
+  //  })
   .catch(error => {
     console.log(error);
   });
