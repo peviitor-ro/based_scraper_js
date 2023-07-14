@@ -59,7 +59,7 @@ fetch(url, {
     scraper.postApiPeViitor(finalJobs, company);
 
     let logo =
-      "https://evolvetoday.ro/wp-content/uploads/2019/09/logo.svg";
+      "https://www.dynata.com/wp-content/themes/dynata/images/dynata-logo.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"

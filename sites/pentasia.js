@@ -98,7 +98,7 @@ Promise.all([request1, request2, request3])
          scraper.postApiPeViitor(finalJobs, company);
      
          let logo =
-           "https://evolvetoday.ro/wp-content/uploads/2019/09/logo.svg";
+           "https://www.pentasia.com/icons/logo.svg";
      
          let postLogo = new scraper.ApiScraper(
            "https://api.peviitor.ro/v1/logo/add/"
