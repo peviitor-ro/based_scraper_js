@@ -2,7 +2,7 @@
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-const url = 'https://www.pentasia.com/_sf/api/v1/jobs/search.json'; // Replace with the actual API endpoint
+const url = 'https://www.pentasia.com/_sf/api/v1/jobs/search.json'; 
 const company = { company: "Pentasia" };
 
 const fetchJobs = (offset) => {
@@ -50,10 +50,9 @@ const request1 = fetchJobs(0);
 const request2 = fetchJobs(100);
 const request3 = fetchJobs(200);
 
-// Concatenate the responses
 Promise.all([request1, request2, request3])
   .then(responseDataArray => {
-    // Concatenate the response data arrays
+ 
     const concatenatedData = responseDataArray.reduce((result, responseData) => {
       return result.concat(responseData.results);
     }, []);
