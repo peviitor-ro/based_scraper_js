@@ -34,7 +34,7 @@ fetch(url, {
   }).then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
 
-    scraper.postApiPeViitor(finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company, process.env.KNOX);
 
     let logo = "https://upload.wikimedia.org/wikipedia/commons/4/4b/BorgWarner.jpg";
 
