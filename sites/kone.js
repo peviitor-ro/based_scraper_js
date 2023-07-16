@@ -36,7 +36,9 @@ s.post(body)
   .then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
 
-    scraper.postApiPeViitor(finalJobs, company);
+
+
+    scraper.postApiPeViitor(finalJobs, company,process.env.Marcel);
 
     let logo = "https://kone.wd3.myworkdayjobs.com/Careers/assets/logo";
 
