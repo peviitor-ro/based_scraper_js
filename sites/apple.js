@@ -31,7 +31,7 @@ s.soup
   })
   .then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
-    scraper.postApiPeViitor(finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company,process.env.Marcel);
     let logo = "https://www.apple.com/apple-touch-icon.png";
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"
