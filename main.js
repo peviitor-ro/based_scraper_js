@@ -7,10 +7,10 @@ let axios = require('axios');
 
 let files = fs.readdirSync(__dirname + "/sites");
 
-let exclude = ["endava.js"];
+let exclude = [];
 
-files.forEach((file) => {
-    if (!exclude.includes(file)) {
+function runFile (file) {
+    return new Promise((resolve) => {
         child_process.exec("node " + "sites/" + file, (err, stdout, stderr) => {
             if (stderr) {
                 console.log("Error scraping " + file);
@@ -24,14 +24,28 @@ files.forEach((file) => {
                         console.log("Both scraping and trigger failed for " + file);
                         console.log(response.data.error);
                     }
+                    resolve();
                 }).catch((error) => {
                     console.log("Error sending trigger for " + file);
                     console.log(error);
+                    resolve();
                 });
             } 
             if (stdout) {
                 console.log("Success scraping " + file);
+                resolve();
             }
         })
+    })
+}
+
+async function runFiles () {
+    for (let i = 0; i < files.length; i++) {
+        if (!exclude.includes(files[i])) {
+            await runFile(files[i]);
+        }
     }
-})
+}
+
+runFiles();
+
