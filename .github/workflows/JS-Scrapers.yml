@@ -27,6 +27,8 @@ jobs:
     - name: Run Scrapers
       env:
         APIKEY: ${{ secrets.APIKEY }}
+        Marcel: ${{ secrets.MARCEL }}
+        KNOX: ${{ secrets.KNOX }}
       run: node main.js
 
 
