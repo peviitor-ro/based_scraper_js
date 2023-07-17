@@ -36,7 +36,7 @@ fetch(url, {
 
     scraper.postApiPeViitor(finalJobs, company, process.env.KNOX);
 
-    let logo = "https://upload.wikimedia.org/wikipedia/commons/4/4b/BorgWarner.jpg";
+    let logo = "https://media.academictransfer.com/LT8OEP2nAexUPaM9-WfgcP488FM=/fit-in/490x162/filters:upscale():fill(white)/logos/ortec-en-wide.jpg";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"
