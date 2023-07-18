@@ -48,7 +48,7 @@ fetch(url, {
 
     scraper.postApiPeViitor(finalJobs, company, process.env.KNOX);
 
-    let logo = "https://upload.wikimedia.org/wikipedia/commons/4/4b/BorgWarner.jpg";
+    let logo = "https://www.infineon.com/frontend/release_2023-06-1/dist/resources/img/logo-desktop-en.png";
 
     let postLogo = new scraper.ApiScraper(
       "https://api.peviitor.ro/v1/logo/add/"
