@@ -65,7 +65,7 @@ Promise.all([request1, request2, request3])
  .then(() => {
          console.log(JSON.stringify(finalJobs, null, 2));
      
-         scraper.postApiPeViitor(finalJobs, company, apiKey);
+         scraper.postApiPeViitor(finalJobs, company);
      
          let logo =
            "https://www.pentasia.com/icons/logo.svg";
