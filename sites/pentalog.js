@@ -11,7 +11,6 @@ let finalJobs = [];
 const company = { company: "Pentalog" };
 
 const data = {
-  "MIME Type": "application/x-www-form-urlencoded",
   action: "search_jobs",
   index_name: "jobs",
   "prefacets[0][field]": "locations",
@@ -23,8 +22,7 @@ const data = {
   "facets[1][field]": "is_remote",
   "facets[1][limit]": 10,
   search: "*",
-  ga: "GA1.2.1968100881.1682088935",
-  mkto: "id:232-EET-259&token:_mch-pentalog.com-1682088936408-58463",
+  ga: "GA1.2.2108953595.1689706726d",
   limit: 100,
   "filters[locations][relation]": "or",
   "filters[locations][values][0]": "Iasi, Romania",
