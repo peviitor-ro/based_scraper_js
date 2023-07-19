@@ -1,10 +1,15 @@
 const uuid = require("uuid");
-const scraper = require("../peviitor_scraper.js");
+const {
+  ApiScraper,
+  Scraper,
+  postApiPeViitor,
+} = require("../peviitor_scraper.js");
 
 const COMPANY = { company: "SyncROSoft" };
 const URL = "https://www.sync.ro/jobs.html";
 const SUFFIX = "#:~:text=";
-const s = new scraper.Scraper(URL);
+const APIKEY = "26011f-2e38-e73c-d46e-a23e774b780";
+const s = new Scraper(URL);
 
 const generateJob = (id, job_title, url_suffix) => ({
   id,
@@ -17,14 +22,12 @@ const generateJob = (id, job_title, url_suffix) => ({
 
 const publish = (finalJobs) => {
   console.log(JSON.stringify(finalJobs, null, 2));
-  scraper.postApiPeViitor(finalJobs, COMPANY);
+  postApiPeViitor(finalJobs, COMPANY, APIKEY);
 
   const logo =
     "https://www.sync.ro/oxygen-webhelp/template/resources/img/logo_syncrosoft.png";
 
-  const postLogo = new scraper.ApiScraper(
-    "https://api.peviitor.ro/v1/logo/add/"
-  );
+  const postLogo = new ApiScraper("https://api.peviitor.ro/v1/logo/add/");
   postLogo.headers.headers["Content-Type"] = "application/json";
   postLogo.post(JSON.stringify([{ id: COMPANY.company, logo }]));
 };
