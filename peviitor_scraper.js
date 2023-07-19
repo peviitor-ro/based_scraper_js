@@ -8,10 +8,6 @@ function postApiPeViitor(data, company, apikey = null) {
   const V4cleanUrl = "https://api.peviitor.ro/v4/clean/";
   const V4updateUrl = "https://api.peviitor.ro/v4/update/";
 
-  if (apikey == null) {
-    apikey = process.env.APIKEY;
-  } 
-
   const scraper = new ApiScraper();
   let resolveApi = "https://dev.laurentiumarian.ro/scraper/based_scraper_js/";
   let status = { status: company.company.toLowerCase() + ".js" };
@@ -22,7 +18,7 @@ function postApiPeViitor(data, company, apikey = null) {
         scraper.url = V4cleanUrl;
         scraper.headers.headers["Content-Type"] =
           "application/x-www-form-urlencoded";
-        scraper.headers.headers["apikey"] = apikey;
+        scraper.headers.headers["apikey"] = apikey || process.env.APIKEY;
 
         scraper.post(company).then(() => {
           scraper.url = V4updateUrl;
