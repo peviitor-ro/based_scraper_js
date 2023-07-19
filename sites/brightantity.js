@@ -10,7 +10,7 @@ const s2 = new scraper.Scraper(url2);
 
 let finalJobs = [];
 const company = { company: "brightantity" };
-
+const apiKey = process.env.KNOX
 Promise.all([s.soup, s2.soup])
     .then(([soup, soup2]) => {
         const jobsS = Object.values(soup.findAll("h2", { class: "eael-entry-title" }));
@@ -35,7 +35,7 @@ Promise.all([s.soup, s2.soup])
     .then(() => {
         console.log(JSON.stringify(finalJobs, null, 2));
 
-        scraper.postApiPeViitor(finalJobs, company);
+        scraper.postApiPeViitor(finalJobs, company, apiKey);
 
         let logo =
             "https://i0.wp.com/brightantity.com/wp-content/uploads/2020/08/1123Asset-2-1.png?resize=768%2C265&ssl=1";
