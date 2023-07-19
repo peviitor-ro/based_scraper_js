@@ -1,9 +1,9 @@
 const uuid = require("uuid");
 const scraper = require("../peviitor_scraper.js");
 
-const COMPANY = { company: "SyncRO Soft" };
+const COMPANY = { company: "SyncROSoft" };
 const URL = "https://www.sync.ro/jobs.html";
-const SUFFIX = "#:~:text="
+const SUFFIX = "#:~:text=";
 const s = new scraper.Scraper(URL);
 
 const generateJob = (id, job_title, url_suffix) => ({
