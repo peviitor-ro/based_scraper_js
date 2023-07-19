@@ -8,7 +8,6 @@ const {
 const COMPANY = { company: "SyncROSoft" };
 const URL = "https://www.sync.ro/jobs.html";
 const SUFFIX = "#:~:text=";
-const APIKEY = "26011f-2e38-e73c-d46e-a23e774b780";
 const s = new Scraper(URL);
 
 const generateJob = (id, job_title, url_suffix) => ({
@@ -22,7 +21,7 @@ const generateJob = (id, job_title, url_suffix) => ({
 
 const publish = (finalJobs) => {
   console.log(JSON.stringify(finalJobs, null, 2));
-  postApiPeViitor(finalJobs, COMPANY, APIKEY);
+  postApiPeViitor(finalJobs, COMPANY, process.env.COSTIN);
 
   const logo =
     "https://www.sync.ro/oxygen-webhelp/template/resources/img/logo_syncrosoft.png";
