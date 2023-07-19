@@ -3,6 +3,7 @@ const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 const company = { company: "Infineon" };
 let finalJobs = [];
+const apiKey = process.env.KNOX
 const url = 'https://www.infineon.com/search/jobs/jobs'
 fetch(url, {
   method: 'POST',
@@ -46,7 +47,7 @@ fetch(url, {
   }).then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
 
-    scraper.postApiPeViitor(finalJobs, company, process.env.KNOX);
+    scraper.postApiPeViitor(finalJobs, company, apiKey);
 
     let logo = "https://www.infineon.com/frontend/release_2023-06-1/dist/resources/img/logo-desktop-en.png";
 

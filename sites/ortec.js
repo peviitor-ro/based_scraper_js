@@ -3,6 +3,7 @@ const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 const company = { company: "Ortec" };
 let finalJobs = [];
+const apiKey = process.env.KNOX
 const url = 'https://ortec.com/api/career'
 fetch(url, {
   method: 'POST',
@@ -34,7 +35,7 @@ fetch(url, {
   }).then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
 
-    scraper.postApiPeViitor(finalJobs, company, process.env.KNOX);
+    scraper.postApiPeViitor(finalJobs, company, apiKey);
 
     let logo = "https://media.academictransfer.com/LT8OEP2nAexUPaM9-WfgcP488FM=/fit-in/490x162/filters:upscale():fill(white)/logos/ortec-en-wide.jpg";
 
