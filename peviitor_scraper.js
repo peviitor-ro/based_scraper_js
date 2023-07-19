@@ -70,9 +70,9 @@ const range = (start, stop, step) =>
 const soup = (html) => new jssoup(html);
 
 module.exports = {
-  Scraper: Scraper,
-  ApiScraper: ApiScraper,
-  postApiPeViitor: postApiPeViitor,
-  range: range,
-  soup: soup,
+  Scraper,
+  ApiScraper,
+  postApiPeViitor,
+  range,
+  soup,
 };
