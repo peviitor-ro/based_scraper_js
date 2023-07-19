@@ -6,7 +6,7 @@ const url = "https://www.siiromania.ro/jobopportunities/#section";
 
 const company = { company: "SII" };
 let finalJobs = [];
-
+const apiKey = process.env.KNOX
 const s = new scraper.Scraper(url);
 
 s.soup
@@ -29,7 +29,7 @@ s.soup
   .then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
 
-    scraper.postApiPeViitor(finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company, apiKey);
 
     let logo =
       "https://www.siiromania.ro/wp-content/themes/corporate-sii-romania/img/logo.png";

@@ -4,6 +4,7 @@ const uuid = require("uuid");
 
 const url = 'https://www.pentasia.com/_sf/api/v1/jobs/search.json'; 
 const company = { company: "Pentasia" };
+const apiKey = process.env.KNOX
 
 const fetchJobs = (offset) => {
   const requestBody = {
@@ -65,7 +66,7 @@ Promise.all([request1, request2, request3])
  .then(() => {
          console.log(JSON.stringify(finalJobs, null, 2));
      
-         scraper.postApiPeViitor(finalJobs, company);
+         scraper.postApiPeViitor(finalJobs, company, apiKey);
      
          let logo =
            "https://www.pentasia.com/icons/logo.svg";

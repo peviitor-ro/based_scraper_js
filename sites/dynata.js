@@ -2,7 +2,7 @@
 const scraper = require("../peviitor_scraper.js");
 const uuid = require("uuid");
 
-
+const apiKey = process.env.KNOX
 const url = 'https://dynata.wd1.myworkdayjobs.com/wday/cxs/dynata/careers/jobs'  
 const requestBody = {
   "appliedFacets":{"locations":["67cdbb242c0f01186560ab7ce9361603","67cdbb242c0f01ff4f8eac7ce9361d03"]},"limit":20,"offset":0,"searchText":""
@@ -37,7 +37,7 @@ fetch(url, {
    .then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
 
-    scraper.postApiPeViitor(finalJobs, company);
+    scraper.postApiPeViitor(finalJobs, company, apiKey);
 
     let logo =
       "https://www.dynata.com/wp-content/themes/dynata/images/dynata-logo.png";
