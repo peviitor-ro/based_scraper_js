@@ -1,7 +1,7 @@
 "use strict";
 
 const axios = require("axios");
-const jssoup = require("jssoup").default;
+const Jssoup = require("jssoup").default;
 const { Scraper, ApiScraper } = require("./lib");
 
 function postApiPeViitor(data, company, apikey = null) {
@@ -13,8 +13,7 @@ function postApiPeViitor(data, company, apikey = null) {
   const status = { status: `${company.company.toLowerCase()}.js` };
   axios
     .post(resolveApi, JSON.stringify(status))
-    .then((response) => {
-      // if (response.data == "active") {
+    .then(() => {
       scraper.url = V4cleanUrl;
       scraper.headers.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
@@ -38,7 +37,7 @@ function postApiPeViitor(data, company, apikey = null) {
 const range = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
 
-const soup = (html) => new jssoup(html);
+const soup = (html) => new Jssoup(html);
 
 module.exports = {
   Scraper,
