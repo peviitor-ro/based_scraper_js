@@ -27,7 +27,7 @@ function postApiPeViitor(data, company, apikey = null) {
       });
     })
     .catch((error) => {
-      console.log(`Error sending trigger for ${file}`);
+      console.log(`Error sending trigger for ${company.company}`);
       console.log(error);
     });
 }
