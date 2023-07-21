@@ -1,46 +1,49 @@
-const uuid = require("uuid");
-const {
-  ApiScraper,
-  Scraper,
-  postApiPeViitor,
-} = require("../peviitor_scraper.js");
+const { Scraper, postApiPeViitor } = require("peviitor_jsscraper");
 
-const COMPANY = { company: "SyncROSoft" };
-const URL = "https://www.sync.ro/jobs.html";
-const SUFFIX = "#:~:text=";
-const s = new Scraper(URL);
-
-const generateJob = (id, job_title, url_suffix) => ({
-  id,
+const generateJob = (job_title, job_link) => ({
   job_title,
-  job_link: URL + url_suffix, // all jobs are on same page -> we simply jump to the element containing the job name
-  company: COMPANY.company,
+  job_link,
   country: "Romania",
   city: "Craiova", // HQ location but might be remote?
 });
 
-const publish = (finalJobs) => {
-  console.log(JSON.stringify(finalJobs, null, 2));
-  postApiPeViitor(finalJobs, COMPANY, process.env.COSTIN);
-
-  const logo =
-    "https://www.sync.ro/oxygen-webhelp/template/resources/img/logo_syncrosoft.png";
-
-  const postLogo = new ApiScraper("https://api.peviitor.ro/v1/logo/add/");
-  postLogo.headers.headers["Content-Type"] = "application/json";
-  postLogo.post(JSON.stringify([{ id: COMPANY.company, logo }]));
+const getJobs = async () => {
+  const url = "https://www.sync.ro/jobs.html";
+  const scraper = new Scraper(url);
+  const type = "HTML";
+  const soup = await scraper.get_soup(type);
+  const divs = soup.findAll("div", { class: "job_title" });
+  const jobs = [];
+  divs.forEach((div) => {
+    const job_title = div.text.replace(" New", "");
+    const jumpTo = "#:~:text="; // all jobs are on same page -> we simply jump to the element containing the job name
+    const href = job_title.split(" ").join("%20");
+    const job_link = url + jumpTo + href;
+    const job = generateJob(job_title, job_link);
+    jobs.push(job);
+  });
+  return jobs;
 };
 
-s.soup.then((soup) => {
-  const divs = soup.findAll("div", { class: "job_title" });
-  const finalJobs = [];
-  divs.forEach((div) => {
-    const id = uuid.v4();
-    const job_title = div.text.replace(" New", "");
-    const href = job_title.split(" ").join("%20");
-    const url_suffix = SUFFIX + href;
-    const job = generateJob(id, job_title, url_suffix);
-    finalJobs.push(job);
-  });
-  publish(finalJobs);
-});
+const getParams = () => {
+  const company = "SyncROSoft";
+  const logo =
+    "https://www.sync.ro/oxygen-webhelp/template/resources/img/logo_syncrosoft.png";
+  const apikey = process.env.COSTIN;
+  const params = {
+    company,
+    logo,
+    apikey,
+  };
+  return params
+};
+
+const run = async () => {
+  const jobs = await getJobs();
+  const params = getParams();
+  await postApiPeViitor(jobs, params);
+};
+
+run(); // this will be called by our main.js job
+
+module.exports = { getJobs, getParams }; // this is needed for our unit test job
