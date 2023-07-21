@@ -7,7 +7,7 @@ let axios = require('axios');
 
 let files = fs.readdirSync(__dirname + "/sites");
 
-let exclude = [];
+let exclude = ["heidelbergcement.js"];
 
 function runFile (file) {
     return new Promise((resolve) => {
@@ -32,9 +32,10 @@ function runFile (file) {
                 });
             } 
             if (stdout) {
+                console.log(stdout);
                 console.log("Success scraping " + file);
                 resolve();
-            }
+            } 
         })
     })
 }
@@ -48,4 +49,3 @@ async function runFiles () {
 }
 
 runFiles();
-
