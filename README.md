@@ -64,6 +64,52 @@ const data = { key1: "value1", key2: "value2" };
 const soup = await scraper.post(data);
 ```
 
+3. Pentru a salva job-urile in baza noastră de date și pentru a putea testa codul este esențial să avem 2 funcții, `getJobs` si `getParams` care trebuiesc exportate.
+
+```javascript
+const { postApiPeViitor } = require("peviitor_jsscraper");
+
+const getJobs = async () => {
+  const job1 = {
+    job_title: "Programator",
+    job_link: "http://example.com/",
+    country: "Romania",
+    city: "Bucuresti",
+  };
+  const job2 = {
+    job_title: "Manager",
+    job_link: "http://example.com/",
+    country: "Romania",
+    city: "Constanta",
+  };
+  const jobs = [jobs1, jobs2];
+  return jobs;
+};
+
+const getParams = () => {
+  const company = "SyncROSoft";
+  const logo =
+    "https://www.sync.ro/oxygen-webhelp/template/resources/img/logo_syncrosoft.png";
+  const apikey = process.env.APIKEY; // api key-urile sunt stocate in github secrets.
+  const params = {
+    company,
+    logo,
+    apikey,
+  };
+  return params;
+};
+
+const run = async () => {
+  const jobs = await getJobs();
+  const params = getParams();
+  await postApiPeViitor(jobs, params);
+};
+
+run(); // this will be called by our main.js job
+
+module.exports = { getJobs, getParams }; // this is needed for our unit test job
+```
+
 ## Atribute si Metode
 
 ### Name:
