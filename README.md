@@ -36,15 +36,13 @@ console.log(soup);
 
 Aceste linii de cod creează un obiect Scraper care are ca URL https://www.example.com, și apoi descarcă codul HTML de la acel URL folosind metoda `get_soup` și returnează un obiect JSSoup care poate fi ulterior folosit pentru a căuta anumite elemente în cadrul paginii web.
 
-Pentru a extrage toate tag-urile "a" care conțin un atribut "href" care începe cu "https://":
+Pentru a extrage toate tag-urile "a" care conțin un atribut "href" cu un anumit URL":
 
 ```javascript
 const type = "HTML";
 const soup = await scraper.get_soup(type);
-const anchors = soup.findAll("a", {"href":(response) =>{
-   response.startsWith("https://");
-   };
- });
+const anchors = soup.findAll("a", {"href":'https://www.iana.org/domains/example'});
+console.log(anchors);
 ```
 
 Pentru a extrage primul tag "h1" de pe pagină:
