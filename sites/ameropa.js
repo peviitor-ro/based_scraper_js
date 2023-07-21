@@ -13,13 +13,10 @@ const s = new scraper.Scraper(url);
 s.soup
   .then((soup) => {
     const jobs = soup.findAll("a", { class: "elementor-accordion-title" });
-    console.log(jobs.length);
     jobs.forEach((job) => {
       const id = uuid.v4();
-      const job_title = job.text.trim();
-      console.log(job_title);   
+      const job_title = job.text.trim(); 
       const job_link = url + SUFFIX + job_title;
-      console.log(job_link);
 
       finalJobs.push({
         id: id,
