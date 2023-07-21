@@ -193,5 +193,3 @@ console.log(nextNode);
 ```
 
 În acest exemplu, nextNode reprezintă nodul următor al nodului reprezentat de variabila soup, adică primul element următor din listă. Folosind metoda .nextSibling(), putem accesa nodul următor al acestui element.
-
-Pentru a vedea mai multe exemple, puteți verifica fișierele din folderul "sites". Acesta conține diverse pagini web pe care le puteți utiliza pentru a testa funcționalitatea clasei Scraper și a altor clase legate de web scraping. În aceste fișiere puteți găsi diverse exemple de atribute și taguri pe care le puteți utiliza în metodele din clasa Rules. De asemenea, puteți crea propriile exemple în aceste fișiere și să le utilizați pentru a experimenta și a îmbunătăți codul dvs.
