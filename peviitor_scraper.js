@@ -57,8 +57,10 @@ function postApiPeViitor(data, company, apikey = null) {
   const scraper = new ApiScraper();
   let resolveApi = "https://dev.laurentiumarian.ro/scraper/based_scraper_js/";
   let status = { status: company.company.toLowerCase() + ".js" };
+  const axios = new ApiScraper(resolveApi);
+  axios.headers.headers["Content-Type"] = "application/json";
   axios
-    .post(resolveApi, JSON.stringify(status))
+    .post( data=JSON.stringify(status))
     .then((response) => {
       // if (response.data == "active") {
         scraper.url = V4cleanUrl;
@@ -97,7 +99,7 @@ function postApiPeViitor(data, company, apikey = null) {
       // }
     })
     .catch((error) => {
-      console.log("Error sending trigger for " + file);
+      console.log("Error sending trigger for " + company.company);
       console.log(error);
     });
 }
