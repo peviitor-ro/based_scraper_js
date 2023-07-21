@@ -27,7 +27,6 @@ s.soup
         country: "Romania",
       });
     });
-    console.log(finalJobs.length);
   })
   .then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
