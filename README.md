@@ -80,7 +80,7 @@ console.log(tag.name);
 
 ### Attributes:
 
-Obiectul Attributes din **scraper_peviitor** este folosit pentru a reprezenta atributele unui tag HTML. Atributele pot fi accesate și modificate folosind sintaxa obiectului Attributes.
+Obiectul Attributes din **peviitor_jsscraper** este folosit pentru a reprezenta atributele unui tag HTML. Atributele pot fi accesate și modificate folosind sintaxa obiectului Attributes.
 
 De exemplu, dacă ai un tag HTML de tipul `<a href="https://www.example.com">Example</a>`, poți accesa atributul href folosind obiectul Attributes. Astfel, poți obține valoarea cu atributul href:
 
