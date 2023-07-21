@@ -54,7 +54,7 @@ const getParams = () => {
 };
 
 const run = async () => {
-  const jobs = getJobs();
+  const jobs = await getJobs();
   const params = getParams();
   postApiPeViitor(jobs, params);
 };
