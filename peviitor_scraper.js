@@ -125,9 +125,24 @@ const range = (start, stop, step) =>
 const soup = (html) => new jssoup(html);
 
 module.exports = {
+  /**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
   Scraper: Scraper,
+  /**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
   ApiScraper: ApiScraper,
+  /**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
   postApiPeViitor: postApiPeViitor,
+  /**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
   range: range,
+  /**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
   soup: soup,
 };
