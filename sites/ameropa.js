@@ -7,6 +7,7 @@ const url = "https://www.ameropa.ro/ro/joburi-disponibile/";
 const company = { company: "ameropa" };
 let finalJobs = [];
 const SUFFIX = "#:~:text=";
+const apiKey = process.env.KNOX
 const s = new scraper.Scraper(url);
 
 s.soup
@@ -32,7 +33,7 @@ s.soup
   })
   .then(() => {
     console.log(JSON.stringify(finalJobs, null, 2));
-    scraper.postApiPeViitor(finalJobs, company,process.env.Marcel);
+    scraper.postApiPeViitor(finalJobs, company, apiKey);
 
     let logo =
       "https://www.bandainamcoent.ro/wp-content/themes/namco/img/logo_small.jpg";
