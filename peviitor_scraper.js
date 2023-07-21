@@ -2,7 +2,9 @@
 
 const axios = require("axios");
 const jssoup = require("jssoup").default;
-
+/**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
 class Scraper {
   constructor(url) {
     this.url = url;
@@ -21,6 +23,9 @@ class Scraper {
   }
 }
 
+/**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
 class ApiScraper {
   constructor(url) {
     this.url = url;
@@ -44,6 +49,9 @@ class ApiScraper {
   }
 }
 
+/**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
 function postApiPeViitor(data, company, apikey = null) {
   const V4cleanUrl = "https://api.peviitor.ro/v4/clean/";
   const V1cleanUrl = "https://api.peviitor.ro/v1/clean/";
@@ -52,7 +60,7 @@ function postApiPeViitor(data, company, apikey = null) {
 
   if (apikey == null) {
     apikey = process.env.APIKEY;
-  } 
+  }
 
   const scraper = new ApiScraper();
   let resolveApi = "https://dev.laurentiumarian.ro/scraper/based_scraper_js/";
@@ -60,20 +68,20 @@ function postApiPeViitor(data, company, apikey = null) {
   const axios = new ApiScraper(resolveApi);
   axios.headers.headers["Content-Type"] = "application/json";
   axios
-    .post( data=JSON.stringify(status))
+    .post((data = JSON.stringify(status)))
     .then((response) => {
       // if (response.data == "active") {
-        scraper.url = V4cleanUrl;
-        scraper.headers.headers["Content-Type"] =
-          "application/x-www-form-urlencoded";
-        scraper.headers.headers["apikey"] = apikey;
+      scraper.url = V4cleanUrl;
+      scraper.headers.headers["Content-Type"] =
+        "application/x-www-form-urlencoded";
+      scraper.headers.headers["apikey"] = apikey;
 
-        scraper.post(company).then(() => {
-          scraper.url = V4updateUrl;
-          scraper.headers.headers["Content-Type"] = "application/json";
+      scraper.post(company).then(() => {
+        scraper.url = V4updateUrl;
+        scraper.headers.headers["Content-Type"] = "application/json";
 
-          scraper.post(JSON.stringify(data));
-        });
+        scraper.post(JSON.stringify(data));
+      });
       // } else {
       //   scraper.url = V1cleanUrl;
       //   scraper.headers.headers["Content-Type"] =
@@ -105,10 +113,15 @@ function postApiPeViitor(data, company, apikey = null) {
 }
 
 // Utility functions
-
+/**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
 const range = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
 
+/**
+ * @deprecated Prefer using peviitor_jsscraper library
+ */
 const soup = (html) => new jssoup(html);
 
 module.exports = {
