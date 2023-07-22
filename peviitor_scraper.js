@@ -68,7 +68,7 @@ function postApiPeViitor(data, company, apikey = null) {
   const axios = new ApiScraper(resolveApi);
   axios.headers.headers["Content-Type"] = "application/json";
   axios
-    .post((data = JSON.stringify(status)))
+    .post((JSON.stringify(status)))
     .then((response) => {
       // if (response.data == "active") {
       scraper.url = V4cleanUrl;
