@@ -1,51 +1,95 @@
-"use strict";
+const fs = require("fs");
+const path = require("path");
+const childProcess = require("child_process");
+const axios = require("axios");
 
-let fs = require('fs');
-let path = require('path');
-let child_process = require('child_process');
-let axios = require('axios');
+const exclude = ["heidelbergcement.js"];
 
-let files = fs.readdirSync(__dirname + "/sites");
-
-let exclude = ["heidelbergcement.js"];
-
-function runFile (file) {
-    return new Promise((resolve) => {
-        child_process.exec("node " + "sites/" + file, (err, stdout, stderr) => {
-            if (stderr) {
-                console.log("Error scraping " + file);
-                console.log("Sending Trigger to API ...");
-                axios.post("https://dev.laurentiumarian.ro/scraper/based_scraper_js/", {
-                    "file": file,
-                }).then((response) => {
-                    if (response.data.success){
-                        console.log("Success Scraping " + file + " after trigger");
-                    } else {
-                        console.log("Both scraping and trigger failed for " + file);
-                        console.log(response.data.error);
-                    }
-                    resolve();
-                }).catch((error) => {
-                    console.log("Error sending trigger for " + file);
-                    console.log(error);
-                    resolve();
-                });
-            } 
-            if (stdout) {
-                console.log(stdout);
-                console.log("Success scraping " + file);
-                resolve();
-            } 
-        })
-    })
+function runFile(file, version) {
+  let command = "";
+  switch (version) {
+    case "old":
+      command = `node sites/${file}`;
+      break;
+    case "new":
+      command = `node -e \"const {run} = require('./sites/${file}'); run();\"`;
+      break;
+    default:
+      console.log("Invalid version");
+      return;
+  }
+  return new Promise((resolve) => {
+    childProcess.exec(command, (err, stdout, stderr) => {
+      if (stderr) {
+        console.log("Error scraping " + file);
+        console.log("Sending Trigger to API ...");
+        console.log(stderr);
+        axios
+          .post("https://dev.laurentiumarian.ro/scraper/based_scraper_js/", {
+            file: file,
+          })
+          .then((response) => {
+            if (response.data.success) {
+              console.log("Success Scraping " + file + " after trigger");
+            } else {
+              console.log("Both scraping and trigger failed for " + file);
+              console.log(response.data.error);
+            }
+            resolve();
+          })
+          .catch((error) => {
+            console.log("Error sending trigger for " + file);
+            console.log(error);
+            resolve();
+          });
+      }
+      if (stdout) {
+        console.log(stdout);
+        console.log("Success scraping " + file);
+        resolve();
+      }
+    });
+  });
 }
 
-async function runFiles () {
-    for (let i = 0; i < files.length; i++) {
-        if (!exclude.includes(files[i])) {
-            await runFile(files[i]);
-        }
+const getSites = () => {
+  const directoryPath = "sites";
+  const newSites = [];
+  const oldSites = [];
+  fs.readdirSync(directoryPath).forEach((file) => {
+    const filePath = path.join(directoryPath, file);
+    if (fs.statSync(filePath).isFile() && path.extname(filePath) === ".js") {
+      const fileContent = fs.readFileSync(filePath, "utf8");
+      const basename = path.basename(filePath);
+      if (fileContent.includes("getParams")) { // a string that we're 99% sure it's included in new sites but not on old ones
+        newSites.push(basename);
+      } else oldSites.push(basename);
     }
+  });
+
+  return [oldSites, newSites];
+};
+
+const runOldSites = async (oldSites) => {
+  for (let i = 0; i < oldSites.length; i+=1) {
+    if (!exclude.includes(oldSites[i])) {
+      await runFile(oldSites[i], "old");
+    }
+  }
+};
+
+const runNewSites = async (newSites) => {
+  for (let i = 0; i < newSites.length; i+=1) {
+    if (!exclude.includes(newSites[i])) {
+      await runFile(newSites[i], "new");
+    }
+  }
+};
+
+async function run() {
+  const [oldSites, newSites] = getSites();
+  await runNewSites(newSites);
+  await runOldSites(oldSites);
 }
 
-runFiles();
+run();
