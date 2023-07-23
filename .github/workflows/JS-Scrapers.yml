@@ -29,4 +29,4 @@ jobs:
           Marcel: ${{ secrets.MARCEL }}
           KNOX: ${{ secrets.KNOX }}
           COSTIN: ${{ secrets.COSTIN }}
-        run: node main.js
+        run: node runScrapers.js
