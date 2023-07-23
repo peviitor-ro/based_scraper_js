@@ -88,8 +88,8 @@ const runNewSites = async (newSites) => {
 
 async function run() {
   const [oldSites, newSites] = getSites();
-  await runNewSites(newSites);
   await runOldSites(oldSites);
+  await runNewSites(newSites);
 }
 
 run();
