@@ -41,7 +41,7 @@ const getJobs = async () => {
 const getParams = () => {
   const company = "HeidelbergCement";
   const logo =
-    "https://www.adient.com/wp-content/uploads/2021/09/Adient_Logo.png";
+    "https://www.heidelbergmaterials.ro/sites/default/files/logo/HeidelbergMaterials.svg";
   const apikey = process.env.APIKEY;
   const params = {
     company,
