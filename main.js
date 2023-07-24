@@ -7,7 +7,7 @@ let axios = require('axios');
 
 let files = fs.readdirSync(__dirname + "/sites");
 
-let exclude = ["heidelbergcement.js"];
+let exclude = [];
 
 function runFile (file) {
     return new Promise((resolve) => {
