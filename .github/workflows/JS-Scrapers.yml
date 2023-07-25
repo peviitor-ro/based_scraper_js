@@ -16,7 +16,7 @@ jobs:
       run: mkdir sites
     - name: Download Folder from Another Repository
       run: |
-        curl -L "https://github.com/peviitor-ro/scrapers.js/archive/main.tar.gz"
+        curl -L -o main.tar.gz "https://github.com/peviitor-ro/scrapers.js/archive/main.tar.gz"
         file main.tar.gz
     - name: ls -l
       run: ls -l
