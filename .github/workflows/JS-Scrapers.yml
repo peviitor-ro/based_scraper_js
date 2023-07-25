@@ -17,6 +17,6 @@ jobs:
     - name: Checkout External Repository
       uses: actions/checkout@v2
       with:
-        repository: peviitor/scrapers.js
+        repository: peviitor-ro/scrapers.js
         ref: main
         path: sites
