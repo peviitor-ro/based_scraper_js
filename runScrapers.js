@@ -12,7 +12,7 @@ function runFile(file, version) {
       command = `node sites/${file}`;
       break;
     case "new":
-      command = `node -e \"const {run} = require('./sites/${file}'); run();\"`;
+      command = `node sites/${file}`;
       break;
     default:
       console.log("Invalid version");
