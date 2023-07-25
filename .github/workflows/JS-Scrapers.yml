@@ -14,10 +14,9 @@ jobs:
       uses: actions/checkout@v2
     - name: mkdir sites
       run: mkdir sites
-    - name: Download Folder from Another Repository
-      run: |
-        curl -L -o main.tar.gz "https://github.com/peviitor-ro/scrapers.js/archive/main.tar.gz"
-        file main.tar.gz
-    - name: cat main.tar.gz
-      run: cat main.tar.gz
-    # Add additional steps here to work with the downloaded folder as needed
+    - name: Checkout External Repository
+      uses: actions/checkout@v2
+      with:
+        repository: peviitor/scrapers.js
+        ref: main
+        path: sites
