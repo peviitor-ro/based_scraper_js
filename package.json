@@ -4,7 +4,7 @@
   "description": "",
   "main": "peviitor_scraper.js",
   "scripts": {
-    "postinstall": "git clone https://github.com/peviitor-ro/scrapers.js.git sites && cd sites && git filter-branch --prune-empty --subdirectory-filter sites HEAD && cd ../"
+    "postinstall": "node postInstall.js"
   },
   "repository": {
     "type": "git",
