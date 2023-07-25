@@ -3,7 +3,7 @@ const path = require("path");
 const childProcess = require("child_process");
 const axios = require("axios");
 
-const exclude = [];
+const exclude = ["michelin.js"];
 
 function runFile(file, version) {
   let command = "";
