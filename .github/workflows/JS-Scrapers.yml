@@ -3,13 +3,7 @@
 
 name: JavaScript Scraper
 
-on:
-  schedule:
-    - cron: "40 18 * * *"
-  workflow_dispatch:
-
-permissions:
-  contents: read
+on: pull_request
 
 jobs:
   build:
@@ -23,10 +17,7 @@ jobs:
           node-version: 14.x
       - name: Install dependencies
         run: npm i
-      - name: Run Scrapers
-        env:
-          APIKEY: ${{ secrets.APIKEY }}
-          Marcel: ${{ secrets.MARCEL }}
-          KNOX: ${{ secrets.KNOX }}
-          COSTIN: ${{ secrets.COSTIN }}
-        run: node runScrapers.js
+      - name: ls
+        run: ls
+      - name: ls sites
+        run: ls sites
