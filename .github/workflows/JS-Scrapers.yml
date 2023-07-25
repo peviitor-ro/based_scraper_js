@@ -10,22 +10,17 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
+    - name: Checkout Source Repository
+      uses: actions/checkout@v2
 
-      - name: Clone the repository with subdirectory
-        run: git clone https://github.com/peviitor-ro/scrapers.js.git sites
-
-      - name: Apply git filter-branch
-        run: |
-          cd sites
-          git filter-branch --prune-empty --subdirectory-filter sites HEAD
-          cd ..
-      - name: ls
-        run: ls
-      - name: ls sites
-        run: ls sites
+    - name: Download Folder from Another Repository
+      run: |
+        # Replace 'source-repo' with the owner and repository name of the repository containing the folder you want to download
+        # Replace 'main' with the branch or tag where the folder is located
+        # Replace 'path/to/folder' with the relative path to the folder you want to download
+        curl -L -o folder.tar.gz "https://github.com/peviitor-ro/scrapers.js/archive/main.tar.gz"
+        tar -xzf folder.tar.gz --strip-components=1 --directory=sites
+        rm folder.tar.gz
+    - name: ls
+      run: ls
+    # Add additional steps here to work with the downloaded folder as needed
