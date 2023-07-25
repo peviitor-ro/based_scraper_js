@@ -23,7 +23,7 @@ jobs:
     - name: Remove everything but the sites folder
       run: |
         find sites/ -mindepth 1 -maxdepth 1 ! -name 'sites' -exec rm -r {} \;
-        mv sites/sites/* root/sites/
+        mv sites/sites/* sites/
         rm -r sites/sites
     - name: ls sites
       run: ls sites
