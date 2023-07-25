@@ -41,7 +41,7 @@ jobs:
           KNOX: ${{ secrets.KNOX }}
           COSTIN: ${{ secrets.COSTIN }}
         run: |
-          echo :root directory":
+          echo "root directory":
           ls
           echo "sites directory":
           ls sites
