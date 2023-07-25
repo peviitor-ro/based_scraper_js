@@ -15,12 +15,7 @@ jobs:
 
     - name: Download Folder from Another Repository
       run: |
-        # Replace 'source-repo' with the owner and repository name of the repository containing the folder you want to download
-        # Replace 'main' with the branch or tag where the folder is located
-        # Replace 'path/to/folder' with the relative path to the folder you want to download
         curl -L -o folder.tar.gz "https://github.com/peviitor-ro/scrapers.js/archive/main.tar.gz"
-        tar -xzf folder.tar.gz --strip-components=1 --directory=sites
-        rm folder.tar.gz
     - name: ls
       run: ls
     # Add additional steps here to work with the downloaded folder as needed
