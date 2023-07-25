@@ -20,7 +20,7 @@ jobs:
         # Replace 'main' with the branch or tag where the folder is located
         # Replace 'path/to/folder' with the relative path to the folder you want to download
         curl -L -o folder.tar.gz "https://github.com/peviitor-ro/scrapers.js/archive/main.tar.gz"
-        tar -xzf folder.tar.gz --strip-components=1 --directory=sites folder/sites
+        tar -xvf folder.tar.gz --strip-components=1 --directory=sites folder/sites
         rm folder.tar.gz
     - name: ls
       run: ls
