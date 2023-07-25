@@ -107,6 +107,10 @@ const run = async () => {
 
 run(); // this will be called by our main.js job
 
+if (require.main === module) {
+  run();
+}
+
 module.exports = { getJobs, getParams }; // this is needed for our unit test job
 ```
 
