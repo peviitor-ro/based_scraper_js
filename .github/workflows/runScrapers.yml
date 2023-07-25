@@ -3,18 +3,16 @@
 
 name: JavaScript Scraper
 
-on: pull_request
-#  schedule:
-#    - cron: "40 18 * * *"
-#  workflow_dispatch:
+on:
+  schedule:
+    - cron: "40 18 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Print GitHub Ref
-        run: echo ${{ github.ref }}"
       - name: Checkout Source Repository
         uses: actions/checkout@v3
       - name: mkdir sites
@@ -42,9 +40,4 @@ jobs:
           Marcel: ${{ secrets.MARCEL }}
           KNOX: ${{ secrets.KNOX }}
           COSTIN: ${{ secrets.COSTIN }}
-        run: |
-          echo "root directory":
-          ls
-          echo "sites directory":
-          ls sites
-        #node runScrapers.js
+        run: node runScrapers.js
