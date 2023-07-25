@@ -10,13 +10,21 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: Install dependencies
-        run: npm i
+
+      - name: Clone the repository with subdirectory
+        run: git clone https://github.com/peviitor-ro/scrapers.js.git sites
+
+      - name: Apply git filter-branch
+        run: |
+          cd sites
+          git filter-branch --prune-empty --subdirectory-filter sites HEAD
+          cd ..
       - name: ls
         run: ls
       - name: ls sites
