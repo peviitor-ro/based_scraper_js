@@ -45,4 +45,5 @@ jobs:
           ls
           echo "sites directory":
           ls sites
+        if: github.ref == 'refs/heads/main'
         #node runScrapers.js
