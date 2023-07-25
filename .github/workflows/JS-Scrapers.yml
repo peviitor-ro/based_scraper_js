@@ -20,3 +20,10 @@ jobs:
         repository: peviitor-ro/scrapers.js
         ref: main
         path: sites
+    - name: Remove everything but the sites folder
+      run: |
+        find root/sites/ -mindepth 1 -maxdepth 1 ! -name 'sites' -exec rm -r {} \;
+        mv root/sites/sites/* root/sites/
+        rm -r root/sites/sites
+    - name: ls sites
+      run: ls sites
