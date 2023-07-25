@@ -18,6 +18,6 @@ jobs:
       run: |
         curl -L -o main.tar.gz "https://github.com/peviitor-ro/scrapers.js/archive/main.tar.gz"
         file main.tar.gz
-    - name: ls -l
-      run: ls -l
+    - name: cat main.tar.gz
+      run: cat main.tarz.gz
     # Add additional steps here to work with the downloaded folder as needed
