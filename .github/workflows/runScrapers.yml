@@ -8,25 +8,36 @@ on:
     - cron: "40 18 * * *"
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 14.x
+      - name: Checkout Source Repository
+        uses: actions/checkout@v3
+      - name: mkdir sites
+        run: mkdir sites
+      - name: Checkout External Repository
+        uses: actions/checkout@v3
+        with:
+          repository: peviitor-ro/scrapers.js
+          ref: main
+          path: sites
+      - name: Remove everything but the sites folder
+        run: |
+          find sites/ -mindepth 1 -maxdepth 1 ! -name 'sites' -exec rm -r {} \;
+          mv sites/sites/* sites/
+          rm -r sites/sites
+      - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: Install dependencies
+      - name: npm i
         run: npm i
-      - name: Run Scrapers
+      - name: node runScrapers.js
         env:
           APIKEY: ${{ secrets.APIKEY }}
           Marcel: ${{ secrets.MARCEL }}
           KNOX: ${{ secrets.KNOX }}
           COSTIN: ${{ secrets.COSTIN }}
-        run: node main.js
+        run: node runScrapers.js

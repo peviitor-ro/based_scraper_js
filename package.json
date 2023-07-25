@@ -4,7 +4,7 @@
   "description": "",
   "main": "peviitor_scraper.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "node postInstall.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "jssoup": "^0.0.15",
-    "peviitor_jsscraper": "^0.1.4",
+    "peviitor_jsscraper": "^1.0.0",
     "querystring": "^0.2.1",
     "uuid": "^9.0.0"
   }
