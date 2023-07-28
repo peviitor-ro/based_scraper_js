@@ -23,7 +23,7 @@ Pentru a va seta mediul de lucru urmați următorii pași:
 
 ## Exemple de utilizare
 
-0. Pentru exemple de implementări puteți consulta [this](https://github.com/peviitor-ro/based_scraper_js/blob/main/sites/syncrosoft.js), [this](https://github.com/peviitor-ro/based_scraper_js/blob/main/sites/abbvie.js) or [this](https://github.com/peviitor-ro/based_scraper_js/blob/main/sites/adient.js)
+0. Pentru exemple de implementări puteți consulta [this](https://github.com/peviitor-ro/scrapers.js/blob/main/sites/syncrosoft.js), [this](https://github.com/peviitor-ro/scrapers.js/blob/main/sites/abbvie.js) or [this](https://github.com/peviitor-ro/scrapers.js/blob/main/sites/adient.js)
 
 1. Descărcarea conținutului de la un anumit URL:
 
@@ -105,9 +105,11 @@ const run = async () => {
   await postApiPeViitor(jobs, params);
 };
 
-run(); // this will be called by our main.js job
+if (require.main === module) {
+  run();
+}
 
-module.exports = { getJobs, getParams }; // this is needed for our unit test job
+module.exports = { run, getJobs, getParams }; // this is needed for our unit test job
 ```
 
 ## Atribute si Metode
