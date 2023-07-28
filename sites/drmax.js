@@ -62,6 +62,8 @@ const run = async () => {
   
 };
 
-run(); // this will be called by our main.js job
-module.exports = { getJobs, getParams }; // this is needed for our unit test job
+if (require.main === module) {
+  run();
+}
+module.exports = { run ,getJobs, getParams }; // this is needed for our unit test job
 
