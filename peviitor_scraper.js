@@ -52,64 +52,43 @@ class ApiScraper {
 /**
  * @deprecated Prefer using peviitor_jsscraper library
  */
-function postApiPeViitor(data, company, apikey = null) {
-  const V4cleanUrl = "https://api.peviitor.ro/v4/clean/";
-  const V1cleanUrl = "https://api.peviitor.ro/v1/clean/";
-  const V4updateUrl = "https://api.peviitor.ro/v4/update/";
-  const V1updateUrl = "https://api.peviitor.ro/v1/update/";
+function postApiPeViitor(data, company, apikey) {
+  const url = "https://api.peviitor.ro";
 
-  if (apikey == null) {
+  const versions = [1, 4];
+
+  if (typeof apikey === "undefined") {
     apikey = process.env.APIKEY;
   }
 
-  const scraper = new ApiScraper();
-  let resolveApi = "https://dev.laurentiumarian.ro/scraper/based_scraper_js/";
-  let status = { status: company.company.toLowerCase() + ".js" };
-  const axios = new ApiScraper(resolveApi);
-  axios.headers.headers["Content-Type"] = "application/json";
-  axios
-    .post((JSON.stringify(status)))
-    .then((response) => {
-      // if (response.data == "active") {
-      scraper.url = V4cleanUrl;
-      scraper.headers.headers["Content-Type"] =
-        "application/x-www-form-urlencoded";
-      scraper.headers.headers["apikey"] = apikey;
+  async function clean() {
+    await Promise.all(
+      versions.map((version) => {
+        const scraper = new ApiScraper(url + "/v" + version + "/clean/");
+        scraper.headers.headers["Content-Type"] =
+          "application/x-www-form-urlencoded";
+        scraper.headers.headers["apikey"] = apikey;
+        return scraper.post(company);
+      })
+    );
+  };
 
-      scraper.post(company).then(() => {
-        scraper.url = V4updateUrl;
+  async function update() {
+    await Promise.all(
+      versions.map((version) => {
+        const scraper = new ApiScraper(url + "/v" + version + "/update/");
         scraper.headers.headers["Content-Type"] = "application/json";
+        scraper.headers.headers["apikey"] = apikey;
+        return scraper.post(JSON.stringify(data));
+      })
+    );
+  };
 
-        scraper.post(JSON.stringify(data));
-      });
-      // } else {
-      //   scraper.url = V1cleanUrl;
-      //   scraper.headers.headers["Content-Type"] =
-      //     "application/x-www-form-urlencoded";
-      //   scraper.headers.headers["apikey"] = apikey;
-
-      //   scraper
-      //     .post(company)
-      //     .then(() => {
-      //       scraper.url = V1updateUrl;
-      //       scraper.headers.headers["Content-Type"] = "application/json";
-
-      //       scraper.post(JSON.stringify(data));
-      //     })
-      //     .then(() => {
-      //       scraper.url = V4cleanUrl;
-      //       scraper.headers.headers["Content-Type"] =
-      //         "application/x-www-form-urlencoded";
-      //       scraper.headers.headers["apikey"] = apikey;
-
-      //       scraper.post(company);
-      //     });
-      // }
-    })
-    .catch((error) => {
-      console.log("Error sending trigger for " + company.company);
-      console.log(error);
+  clean().then(() => {
+    update().then(() => {
+      console.log("Success scraping " + company.company);
     });
+  });
 }
 
 // Utility functions
