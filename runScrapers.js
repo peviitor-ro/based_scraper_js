@@ -44,7 +44,6 @@ function runFile(file, version) {
           });
       }
       if (stdout) {
-        console.log(stdout);
         console.log("Success scraping " + file);
         resolve();
       }
