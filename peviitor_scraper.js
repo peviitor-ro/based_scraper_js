@@ -52,7 +52,7 @@ class ApiScraper {
 /**
  * @deprecated Prefer using peviitor_jsscraper library
  */
-function postApiPeViitor(data, company, apikey) {
+async function postApiPeViitor(data, company, apikey) {
   const url = "https://api.peviitor.ro";
 
   const versions = [1, 4];
@@ -62,33 +62,42 @@ function postApiPeViitor(data, company, apikey) {
   }
 
   async function clean() {
-    await Promise.all(
-      versions.map((version) => {
-        const scraper = new ApiScraper(url + "/v" + version + "/clean/");
-        scraper.headers.headers["Content-Type"] =
-          "application/x-www-form-urlencoded";
-        scraper.headers.headers["apikey"] = apikey;
-        return scraper.post(company);
-      })
-    );
-  };
+    versions.map(async (version) => {
+      const scraper = new ApiScraper(url + "/v" + version + "/clean/");
+      scraper.headers.headers["Content-Type"] =
+        "application/x-www-form-urlencoded";
+      scraper.headers.headers["apikey"] = apikey;
+      return await scraper.post(company);
+    });
+  }
 
   async function update() {
-    await Promise.all(
-      versions.map((version) => {
-        const scraper = new ApiScraper(url + "/v" + version + "/update/");
-        scraper.headers.headers["Content-Type"] = "application/json";
-        scraper.headers.headers["apikey"] = apikey;
-        return scraper.post(JSON.stringify(data));
-      })
-    );
-  };
-
-  clean().then(() => {
-    update().then(() => {
-      console.log("Success scraping " + company.company);
+    versions.map(async (version) => {
+      const scraper = new ApiScraper(url + "/v" + version + "/update/");
+      scraper.headers.headers["Content-Type"] = "application/json";
+      scraper.headers.headers["apikey"] = apikey;
+      return await scraper.post(JSON.stringify(data));
     });
+  }
+
+  async function postDataSet() {
+    const file = `${company.company.toLowerCase()}.js`;
+    const url = `https://dev.laurentiumarian.ro/dataset/based_scraper_js/${file}/`;
+    const scraper = new ApiScraper(url);
+    const dataObj = {
+      data: data.length,
+    };
+    scraper.headers.headers["Content-Type"] = "application/json";
+    scraper.headers.headers["apikey"] = apikey;
+    return await scraper.post(JSON.stringify(dataObj));
+  }
+
+  await clean();
+  await update().then(() => {
+    console.log("Success scraping " + company.company);
   });
+
+  await postDataSet();
 }
 
 // Utility functions
@@ -105,23 +114,23 @@ const soup = (html) => new jssoup(html);
 
 module.exports = {
   /**
- * @deprecated Prefer using peviitor_jsscraper library
- */
+   * @deprecated Prefer using peviitor_jsscraper library
+   */
   Scraper: Scraper,
   /**
- * @deprecated Prefer using peviitor_jsscraper library
- */
+   * @deprecated Prefer using peviitor_jsscraper library
+   */
   ApiScraper: ApiScraper,
   /**
- * @deprecated Prefer using peviitor_jsscraper library
- */
+   * @deprecated Prefer using peviitor_jsscraper library
+   */
   postApiPeViitor: postApiPeViitor,
   /**
- * @deprecated Prefer using peviitor_jsscraper library
- */
+   * @deprecated Prefer using peviitor_jsscraper library
+   */
   range: range,
   /**
- * @deprecated Prefer using peviitor_jsscraper library
- */
+   * @deprecated Prefer using peviitor_jsscraper library
+   */
   soup: soup,
 };
