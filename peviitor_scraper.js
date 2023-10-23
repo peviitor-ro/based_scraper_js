@@ -52,13 +52,14 @@ class ApiScraper {
 /**
  * @deprecated Prefer using peviitor_jsscraper library
  */
-async function postApiPeViitor(data, company, apikey) {
+function postApiPeViitor(data, company, apikey) {
   const url = "https://api.peviitor.ro";
 
   const versions = [1, 4];
 
   if (typeof apikey === "undefined") {
-    apikey = process.env.APIKEY;
+    // apikey = process.env.APIKEY;
+    apikey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
   }
 
   async function clean() {
@@ -92,12 +93,9 @@ async function postApiPeViitor(data, company, apikey) {
     return await scraper.post(JSON.stringify(dataObj));
   }
 
-  await clean();
-  await update().then(() => {
-    console.log("Success scraping " + company.company);
-  });
-
-  await postDataSet();
+  clean();
+  postDataSet();
+  update();
 }
 
 // Utility functions
