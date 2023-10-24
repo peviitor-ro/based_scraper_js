@@ -57,14 +57,15 @@ function postApiPeViitor(data, company, apikey) {
 
   const versions = [1, 4];
 
+  const scraper = new ApiScraper(url);
+
   if (typeof apikey === "undefined") {
-    // apikey = process.env.APIKEY;
-    apikey = "182b157-bb68-e3c5-5146-5f27dcd7a4c8";
+    apikey = process.env.APIKEY;
   }
 
-  async function clean() {
-    versions.map(async (version) => {
-      const scraper = new ApiScraper(url + "/v" + version + "/clean/");
+  function clean() {
+    versions.forEach(async (version) => {
+      scraper.url = url + "/v" + version + "/clean/";
       scraper.headers.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
       scraper.headers.headers["apikey"] = apikey;
@@ -72,16 +73,16 @@ function postApiPeViitor(data, company, apikey) {
     });
   }
 
-  async function update() {
-    versions.map(async (version) => {
-      const scraper = new ApiScraper(url + "/v" + version + "/update/");
+  function update() {
+    versions.forEach(async (version) => {
+      scraper.url = url + "/v" + version + "/update/";
       scraper.headers.headers["Content-Type"] = "application/json";
       scraper.headers.headers["apikey"] = apikey;
       return await scraper.post(JSON.stringify(data));
     });
   }
 
-  async function postDataSet() {
+  function postDataSet() {
     const file = `${company.company.toLowerCase()}.js`;
     const url = `https://dev.laurentiumarian.ro/dataset/based_scraper_js/${file}/`;
     const scraper = new ApiScraper(url);
@@ -90,12 +91,16 @@ function postApiPeViitor(data, company, apikey) {
     };
     scraper.headers.headers["Content-Type"] = "application/json";
     scraper.headers.headers["apikey"] = apikey;
-    return await scraper.post(JSON.stringify(dataObj));
+    return scraper.post(JSON.stringify(dataObj));
   }
 
   clean();
   postDataSet();
-  update();
+
+  setTimeout(() => {
+    update();
+  }, 3000);
+  
 }
 
 // Utility functions
