@@ -52,7 +52,7 @@ class ApiScraper {
 /**
  * @deprecated Prefer using peviitor_jsscraper library
  */
-function postApiPeViitor(data, company, apikey) {
+async function postApiPeViitor(data, company, apikey) {
   const url = "https://api.peviitor.ro";
 
   const versions = [1, 4];
@@ -63,23 +63,27 @@ function postApiPeViitor(data, company, apikey) {
     apikey = process.env.APIKEY;
   }
 
-  function clean() {
-    versions.forEach(async (version) => {
-      scraper.url = url + "/v" + version + "/clean/";
-      scraper.headers.headers["Content-Type"] =
-        "application/x-www-form-urlencoded";
-      scraper.headers.headers["apikey"] = apikey;
-      return await scraper.post(company);
-    });
+  async function clean() {
+    await Promise.all(
+      versions.map(async (version) => {
+        scraper.url = url + "/v" + version + "/clean/";
+        scraper.headers.headers["Content-Type"] =
+          "application/x-www-form-urlencoded";
+        scraper.headers.headers["apikey"] = apikey;
+        await scraper.post(company);
+      })
+    );
   }
 
-  function update() {
-    versions.forEach(async (version) => {
-      scraper.url = url + "/v" + version + "/update/";
-      scraper.headers.headers["Content-Type"] = "application/json";
-      scraper.headers.headers["apikey"] = apikey;
-      return await scraper.post(JSON.stringify(data));
-    });
+  async function update() {
+    await Promise.all(
+      versions.map(async (version) => {
+        scraper.url = url + "/v" + version + "/update/";
+        scraper.headers.headers["Content-Type"] = "application/json";
+        scraper.headers.headers["apikey"] = apikey;
+        await scraper.post(JSON.stringify(data));
+      })
+    );
   }
 
   function postDataSet() {
@@ -94,13 +98,9 @@ function postApiPeViitor(data, company, apikey) {
     return scraper.post(JSON.stringify(dataObj));
   }
 
-  clean();
-  postDataSet();
-
-  setTimeout(() => {
-    update();
-  }, 3000);
-  
+  await clean();
+  await postDataSet();
+  await update();
 }
 
 // Utility functions
