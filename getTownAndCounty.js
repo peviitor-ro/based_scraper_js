@@ -8178,6 +8178,8 @@ const counties = [
   },
   {
     Ilfov: [
+      "Dragomiresti Vale",
+      "Dragomiresti Deal",
       "Voluntari",
       "Buftea",
       "Pantelimon",
