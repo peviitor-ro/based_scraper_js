@@ -4484,7 +4484,6 @@ const counties = [
   {
     Cluj: [
       "Cluj-Napoca",
-      "Jucu",
       "Turda",
       "Dej",
       "Campia Turzii",
@@ -8179,9 +8178,10 @@ const counties = [
   },
   {
     Ilfov: [
+      "Voluntari",
       "Dragomiresti Vale",
       "Dragomiresti Deal",
-      "Voluntari",
+      "Stefanestii de Jos",
       "Buftea",
       "Pantelimon",
       "Popesti Leordeni",
@@ -8902,7 +8902,7 @@ const counties = [
   },
   {
     Mures: [
-      "Targu Mures",
+      "Targu-Mures",
       "Reghin",
       "Sighisoara",
       "Tarnaveni",
@@ -13936,23 +13936,28 @@ const removeDiacritics = (str) => {
 
 // Get town and county from a string
 const getTownAndCounty = (town) => {
-    let county = false;
-    let foudedTown = false;
-    let townWithoutDiacritics = removeDiacritics(town.toLowerCase());
-    for (let i = 0; i < counties.length; i++) {
-      for (let j = 0; j < counties[i][Object.keys(counties[i])[0]].length; j++) {
-        if (townWithoutDiacritics === removeDiacritics(counties[i][Object.keys(counties[i])[0]][j].toLowerCase())) {
-          county = Object.keys(counties[i])[0];
-          foudedTown = counties[i][Object.keys(counties[i])[0]][j];
-          break;
-        }
+  let county = false;
+  let foudedTown = false;
+  let townWithoutDiacritics = removeDiacritics(town.toLowerCase());
+  for (let i = 0; i < counties.length; i++) {
+    for (let j = 0; j < counties[i][Object.keys(counties[i])[0]].length; j++) {
+      if (
+        townWithoutDiacritics ===
+        removeDiacritics(
+          counties[i][Object.keys(counties[i])[0]][j].toLowerCase()
+        )
+      ) {
+        county = Object.keys(counties[i])[0];
+        foudedTown = counties[i][Object.keys(counties[i])[0]][j];
+        break;
       }
     }
+  }
 
-    return { county, foudedTown };
+  return { county, foudedTown };
 };
 
 module.exports = {
-    getTownAndCounty,
-    counties
-}
+  getTownAndCounty,
+  counties,
+};
