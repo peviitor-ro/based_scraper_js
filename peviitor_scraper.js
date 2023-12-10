@@ -1,13 +1,15 @@
 "use strict";
 
 const axios = require("axios");
+const https = require("https");
 const jssoup = require("jssoup").default;
 /**
  * @deprecated Prefer using peviitor_jsscraper library
  */
 class Scraper {
-  constructor(url) {
+  constructor(url, ssl = false) {
     this.url = url;
+    this.ssl = ssl;
     this.headers = {
       headers: {
         "User-Agent":
@@ -18,6 +20,12 @@ class Scraper {
   }
 
   async get_soup() {
+    if (this.ssl) {
+      const agent = new https.Agent({
+        rejectUnauthorized: false,
+      });
+      this.headers.httpsAgent = agent;
+    }
     const response = await axios.get(this.url, this.headers);
     return new jssoup(response.data);
   }
