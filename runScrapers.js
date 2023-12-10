@@ -46,6 +46,9 @@ function runFile(file, version) {
       if (stdout) {
         console.log("Success scraping " + file);
         resolve();
+      } else {
+        console.log("Error scraping " + file);
+        resolve();
       }
     });
   });
