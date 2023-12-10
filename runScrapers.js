@@ -47,7 +47,7 @@ function runFile(file, version) {
         console.log("Success scraping " + file);
         resolve();
       } else {
-        console.log("Error scraping " + file);
+        console.log("No jobs available for " + file);
         resolve();
       }
     });
