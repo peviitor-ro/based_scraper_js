@@ -5139,7 +5139,7 @@ const counties = [
   },
   {
     Covasna: [
-      "Sfantu  Gheorghe",
+      "Sfantu Gheorghe",
       "Targu Secuiesc",
       "Covasna",
       "Intorsura Buzaului",
@@ -6374,7 +6374,6 @@ const counties = [
       "Obedeni",
       "Corbeanca",
       "Radu Voda",
-      "Sfantu Gheorghe",
       "Sterea",
       "Dimitrie Cantemir",
       "Teiusu",
@@ -13942,10 +13941,7 @@ const getTownAndCounty = (town) => {
   let townWithoutDiacritics = removeDiacritics(town.toLowerCase());
   for (const countyObj of counties) {
     for (const townName of countyObj[Object.keys(countyObj)[0]]) {
-      if (
-        townWithoutDiacritics ===
-        removeDiacritics(townName.toLowerCase())
-      ) {
+      if (townWithoutDiacritics === removeDiacritics(townName.toLowerCase())) {
         county = Object.keys(countyObj)[0];
         foudedTown = townName;
         break;
